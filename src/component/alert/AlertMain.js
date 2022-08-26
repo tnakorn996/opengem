@@ -97,8 +97,7 @@ export default function AlertMain({
   const [appstatic, setappstatic] = useApp(alertmain, alertmainstatic.alertmainid, alertmainstatic.alertmainindex, alertmaindata)
 
   // console.log('alertmaindata', alertmaindata)
-  // console.log('alertmaindata', alertmaindata)
-  if(typeof alertmaindata === 'undefined') return alert(`message`)
+  // if(typeof alertmaindata === 'undefined') return alert(`message`)
 
   return (
     <div>

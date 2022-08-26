@@ -33,7 +33,8 @@ export default function BarMain({
                 barmainindex: 0,
             })
         }
-        if(location.pathname.includes(`index`)){
+        if(location.pathname.includes(`index`)
+        || location.pathname.includes(`form`)){
             setbarmainstate({
                 barmainid: `apptfoot`,
                 barmainindex: 1,
@@ -45,7 +46,7 @@ export default function BarMain({
       for(const data of appmainul){
         if(location.pathname === data.contentaction){
             setbarmaintitle(data.contenttitle)
-        }
+        } 
       }
     }, [location])
     
@@ -60,7 +61,9 @@ export default function BarMain({
         },
         {
             barmainrender: () => {
-                return appTfootRenderTwo()
+                return appTfootRenderTwo({
+                    data: barmaintitle,
+                })
             }
         },
     ]
@@ -72,7 +75,7 @@ export default function BarMain({
         }
     ]
 
-    const [appstatic, setappstatic] = useApp(barmain, barmainstate.barmainid,  barmainstate.barmainindex, messagedl)
+    const [appstatic, setappstatic] = useApp(barmain, barmainstate.barmainid,  barmainstate.barmainindex, messagedl, barmaintitle)
     
     if(auth === null) return null
 
@@ -105,14 +108,19 @@ export function appTfootRender({data, datatwo}) {
   )
 }
 
-export function appTfootRenderTwo() {
+export function appTfootRenderTwo({data}) {
   return (
     <div>
+        <section className="flex flex-row items-center justify-between">
         <Link to={-1}>
         <CardMain>
         <p className="m-h6">←</p>
         </CardMain>
         </Link>
+        <CardMain>
+            {data}
+        </CardMain>
+        </section>
     </div>
   )
 }

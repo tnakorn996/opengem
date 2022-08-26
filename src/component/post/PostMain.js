@@ -10,6 +10,9 @@ import StaMain from '../sta/StaMain'
 import DtaMain from '../dta/DtaMain'
 import SheetMain from '../../layout/sheet/SheetMain'
 import SpinMain from '../../layout/spin/SpinMain'
+import ThemeMain from '../../layout/theme/ThemeMain'
+import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
+import { RiMore2Line } from 'react-icons/ri'
 
 export default function PostMain({
     postmaindata,
@@ -22,6 +25,7 @@ export default function PostMain({
         fieldmainstate,
 
         auth,
+        claimdl,
         messagedl,
 
     } = useContext(Context)
@@ -39,9 +43,18 @@ export default function PostMain({
     const couponaddress = [
         {
             postmainrender: () => {
-                return couponMainRender({
-                    data: postmaindata
-                })
+                for(const data of claimdl[0]?.contextdata){
+                    if(postmaindata.couponid === data.couponid.couponid){
+                        return couponMainRender({
+                            data: Object.assign(postmaindata, data)
+                        })
+                    } else {
+                        return couponMainRender({
+                            data: Object.assign(postmaindata)
+                        })
+                    }
+                }
+                
             }
         },
         {
@@ -62,7 +75,7 @@ export default function PostMain({
     const claimaddress = [
         {
             postmainrender: () => {
-                return couponMainRender({
+                return claimMainRender({
                     data: postmaindata
                 })
             }
@@ -116,7 +129,7 @@ export function userMainRender({data}) {
     <div>
         <section className="">
             {data?.map(data => (<>
-            <Link to={`/user/userindex/${data?.userid}`}>
+            <Link to={`/user/userform/`}>
             <article className="">
                     <ChipMain>
                     <figure className="h-[30px] w-[30px] flex items-center justify-center bg-slate-700">
@@ -135,21 +148,60 @@ export function userMainRender({data}) {
 
 
 export function couponMainRender({data}) {
+    console.log('data', data)
     return (
         <div>
         <section className="">
+            <CardMain>
+            <SheetMain>
             <article className="flex flex-row justify-between">
-            <Link to={`/coupon/couponindex/${data?.couponid}`}>
-                <CardMain>
-                <p className="">{data?.couponid}</p>
-                </CardMain>
-            </Link>
-                <DtaMain dtamaindata={{dtamainhref: `/claim/claimform/${data?.couponid}`}} dtamainstatic={{dtamainid: `claimdframe`, dtamainindex: 0}} >
-                <CardMain>
-                    more
-                </CardMain>
-                </DtaMain>
+                {/* <CardMain>
+                <ChipMain>
+                <ThemeMainTwo>
+                <figure className="w-[60px] h-[60px] flex justify-center">
+                    <CardMain>
+                    <p className="">{data?.couponcost}</p>
+                    </CardMain>
+                </figure>
+                </ThemeMainTwo>
+                </ChipMain>
+                </CardMain> */}
+                <figcaption className="w-full flex flex-row items-center justify-between">
+                    <Link to={`/coupon/couponindex/${data?.couponid?.couponid || data?.couponid}`}>
+                    <CardMain>
+                    <p className="m-h5">{data?.coupontitle}</p>
+                    </CardMain>
+                    </Link>
+                    <DtaMain dtamaindata={{dtamainhref: `/claim/claimform/${data?.couponid?.couponid || data?.couponid}`}} dtamainstatic={{dtamainid: `claimdframe`, dtamainindex: 0}} >
+                    <CardMain>
+                        <p className="m-h5"><RiMore2Line /></p>
+                    </CardMain>
+                    </DtaMain>
+                </figcaption>                
             </article>
+            <article className="">
+                <CardMain>
+                <ChipMain>
+                <ThemeMainTwo>
+                    <div className="flex flex-row  uppercase m-h4">
+                    <figure className={`w-full flex justify-center ${couponMainAction(data?.claimid)}`}>
+                        <CardMain>
+                        {data?.claimid ? `claimed` : `unclaimed`}
+                        </CardMain>
+                    </figure>
+                    <figure className={`w-full flex justify-center ${couponMainAction(data?.claimid)}`}>
+                        <CardMain>
+                        {data?.claimid ? `donated` : `undonated`}
+                        </CardMain>
+                    </figure>
+                    </div>
+                </ThemeMainTwo>
+                </ChipMain>
+                </CardMain>
+                
+            </article>
+            </SheetMain>
+            </CardMain>
         </section>
     </div>
   )
@@ -199,31 +251,40 @@ export function couponMainRenderTwo({data, datatwo, datathree, auth}) {
         </section>
         </SheetMain>
         </CardMain>
+        <section className="w-full fixed bottom-0 left-0 md:relative">
         {auth ? (<>
-        <section className="">
             <StaMain 
                 stamaindata={datatwo && datatwo} 
                 stamainstatic={{stamainid: `claimsframe`, stamainindex: 0}} />
-        </section>
         </>) : (<>
-        <section className="">
             <StaMain 
                 stamaindata={datatwo && datatwo} 
                 stamainstatic={{stamainid: `couponsframe`, stamainindex: 0}} />
-        </section>
         </>)}
+        </section>
         </figcaption>
         </div>
 
-            </>))}
+        </>))}
     </div>
   )
 }
 
-
-export function claimMainRenderTwo({data}) {
+export function claimMainRender({data}) {
     // console.log('datadd', data)
     // console.log('datatwo', datatwo)
+    return (
+        <div>
+        <section className="">
+        <CardMain>
+        ccc        
+        </CardMain>
+        </section>
+    </div>
+  )
+}
+
+export function claimMainRenderTwo({data}) {
     return (
         <div>
         <section className="">
@@ -235,3 +296,8 @@ export function claimMainRenderTwo({data}) {
   )
 }
 
+export function couponMainAction(first) {
+    if(typeof first === 'undefined') return `!bg-slate-700`
+    if(typeof first !== 'undefined') return `!bg-green-700`
+  return 
+}

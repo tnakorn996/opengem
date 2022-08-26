@@ -28,10 +28,8 @@ export default function FieldMain({
 
     const refemail = useRef(null)
     const refpassword = useRef(null)
-    const refcost = useRef(null)
-    const refcompany = useRef(null)
-    const refclaim = useRef(null)
-    const refcontribute = useRef(null)
+    const refcouponcost = useRef(null)
+    const refcoupontitle = useRef(null)
 
 //   function fieldMainAction(first, second) {
 //     for(const data of first) {
@@ -72,8 +70,8 @@ export default function FieldMain({
         password: refpasswordvalue,
     })
     alert(`Successfully sent email to ${refemailvalue}`)
-    // alert(error.message)
     setfieldmainstate(!fieldmainstate)
+    // alert(error.message)
       // setfieldmainbool(!fieldmainbool)
   }
 
@@ -98,17 +96,18 @@ export default function FieldMain({
             //   navigate(`/workout/workoutmain`)
             // setfieldmainbool(!fieldmainbool)
             setfieldmainstate(!fieldmainstate)
+            navigate(`/coupon/couponmain`)
       }
   }
 
   const fieldMainSignout = async () => {
           const { error } = await supabase.auth.signOut(auth.access_token)
         //   alert(error.message)
+        navigate(`/auth/authmain`)
           alert('Signed out successfully')
           setauth()
             setfieldmainstate(!fieldmainstate)
             // setfieldmainbool(!fieldmainbool)
-            //   navigate(`/auth/authmain`)
   }
 
   //////////////////////////////////////
@@ -143,10 +142,8 @@ export default function FieldMain({
   function fieldMainQuery() {
     const user = supabase.auth.user()
     const href = splitstaticthree || param.id
-    const refcostvalue = refcost?.current?.value
-    // const refcompanyvalue = refcompany?.current?.value
-    // const refclaimvalue = refclaim?.current?.value
-    // const refcontributevalue = refcontribute?.current?.value
+    const refcouponcostvalue = refcouponcost?.current?.value
+    const refcoupontitlevalue = refcoupontitle?.current?.value
     if(fieldmainstatic.fieldmainid === 'couponform') {
         return {
                 fieldmainidtwo: 'coupon',
@@ -155,10 +152,10 @@ export default function FieldMain({
                 fieldmainaction: `/coupon/couponindex/${href || fieldmainid}`,
                 fieldmaindata: {
                     couponid: href || fieldmainid,
-                    couponcost: refcostvalue,
+                    couponcost: refcouponcostvalue,
 
                     userid: user.id,
-                    companyid: fieldmainid,
+                    coupontitle: refcoupontitlevalue,
                 },
                 fieldmaindatatwo: {
                     couponid: href
@@ -197,13 +194,13 @@ export default function FieldMain({
                 const { error } = await supabase.from(ref.fieldmainidtwo).update(ref.fieldmaindata).match(ref.fieldmaindatatwo)
                 // alert(error.message)
             } 
-            navigate(ref.fieldmainhref)
             setfieldmainstate(!fieldmainstate)
+            navigate(ref.fieldmainhref)
             // setfieldmainbool(!fieldmainbool)
             //   fieldMainActionTwo(ref)
         } catch (error) {
-            // alert(error.message)
             setfieldmainstate(!fieldmainstate)
+            // alert(error.message)
             // setfieldmainbool(!fieldmainbool)
             // fieldMainActionTwo(error)
         }
@@ -274,11 +271,11 @@ export default function FieldMain({
             fieldmainentitle: `sign up`, 
             fieldmaindata: [
                 {
-                    fieldmainsubtitle: `ss`,
+                    fieldmainsubtitle: `Email`,
                     fieldmainrender: <input ref={refemail} type="email" className="l-input" placeholder="nn" />
                 },
                 {
-                    fieldmainsubtitle: `ppp`,
+                    fieldmainsubtitle: `Password`,
                     fieldmainrender: <input ref={refpassword} type="password" className="l-input" placeholder="nn" />
                 },
             ]
@@ -289,11 +286,11 @@ export default function FieldMain({
             fieldmainentitle: `sign in`, 
             fieldmaindata: [
                 {
-                    fieldmainsubtitle: `ss`,
+                    fieldmainsubtitle: `Email`,
                     fieldmainrender: <input ref={refemail} type="email" className="l-input" placeholder="nn" />
                 },
                 {
-                    fieldmainsubtitle: `ppp`,
+                    fieldmainsubtitle: `Password`,
                     fieldmainrender: <input ref={refpassword} type="password" className="l-input" placeholder="nn" />
                 },
             ]
@@ -306,47 +303,20 @@ export default function FieldMain({
         },
     ]
 
-    const companyform = [
-        {
-            fieldmaintitle: `dddd`, 
-            fieldmainaction: fieldMainUpsert,
-            fieldmainentitle: `upsert`, 
-            fieldmaindata: [
-                {
-                    fieldmainsubtitle: `Cost`,
-                    fieldmainrender: <input onClick={() => {fieldMainSelect(`couponcost`, refcost)}} ref={refcost} className="l-input" type={"number"} placeholder="nn" />
-                },
-
-                {
-                    fieldmainsubtitle: `Company id`,
-                    fieldmainrender: <input onClick={() => {fieldMainSelect(`companyid`, refcompany)}} ref={refcompany} className="l-input" placeholder="nn" />
-                },
-                // {
-                //     fieldmainsubtitle: `Claim id`,
-                //     fieldmainrender: <ChoiceMain choicemainref={refclaim} choicemainstatic={{choicemainid: `claimtextarea`, choicemainindex: 0}} /> 
-                // },
-                // {
-                //     fieldmainsubtitle: `Contribute id`,
-                //     fieldmainrender: <ChoiceMain choicemainref={refcontribute} choicemainstatic={{choicemainid: `contributetextarea`, choicemainindex: 0}} /> 
-                // },
-            ]
-        }
-    ]
-
     const couponform = [
         {
-            fieldmaintitle: `dddd`, 
+            // fieldmaintitle: `dddd`, 
             fieldmainaction: fieldMainUpsert,
             fieldmainentitle: `upsert`, 
             fieldmaindata: [
                 {
                     fieldmainsubtitle: `Cost`,
-                    fieldmainrender: <input onClick={() => {fieldMainSelect(`couponcost`, refcost)}} ref={refcost} className="l-input" type={"number"} placeholder="nn" />
+                    fieldmainrender: <input onClick={() => {fieldMainSelect(`couponcost`, refcouponcost)}} ref={refcouponcost} className="l-input" type={"number"} placeholder="nn" />
                 },
 
                 {
-                    fieldmainsubtitle: `Company id`,
-                    fieldmainrender: <input onClick={() => {fieldMainSelect(`companyid`, refcompany)}} ref={refcompany} className="l-input" placeholder="nn" />
+                    fieldmainsubtitle: `Company name`,
+                    fieldmainrender: <input onClick={() => {fieldMainSelect(`coupontitle`, refcoupontitle)}} ref={refcoupontitle} className="l-input" placeholder="nn" />
                 },
                 // {
                 //     fieldmainsubtitle: `Claim id`,
@@ -362,12 +332,12 @@ export default function FieldMain({
 
     const claimform = [
         {
-            fieldmaintitle: `dddd`, 
+            // fieldmaintitle: `dddd`, 
             fieldmainaction: fieldMainUpsert,
             fieldmainentitle: `Create claim`, 
         },
         {
-            fieldmaintitle: `dddd`, 
+            // fieldmaintitle: `dddd`, 
             fieldmainaction: fieldMainDelete,
             fieldmainentitle: `Delete claim`, 
         },
@@ -375,12 +345,12 @@ export default function FieldMain({
 
     const archiveform = [
         {
-            fieldmaintitle: `dddd`, 
+            // fieldmaintitle: `dddd`, 
             fieldmainaction: fieldMainUpsert,
             fieldmainentitle: `Create archive`, 
         },
         {
-            fieldmaintitle: `dddd`, 
+            // fieldmaintitle: `dddd`, 
             fieldmainaction: fieldMainDelete,
             fieldmainentitle: `Delete archive`, 
         },
@@ -391,10 +361,6 @@ export default function FieldMain({
         {
             fieldmainid: `authform`,
             fieldmainindex: authform,
-        },
-        {
-            fieldmainid: `companyform`,
-            fieldmainindex: companyform,
         },
         {
             fieldmainid: `couponform`,

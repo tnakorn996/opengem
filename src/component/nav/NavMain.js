@@ -6,6 +6,7 @@ import useApp from '../../hook/useApp'
 import CardMain from '../../layout/card/CardMain'
 import ThemeMain from '../../layout/theme/ThemeMain'
 import ChipMain from '../../layout/chip/ChipMain'
+import StaMain from '../sta/StaMain'
 
 export default function NavMain({
 
@@ -52,7 +53,7 @@ export default function NavMain({
         {
             navmainid: `apptbody`,
             navmainref: apptbody,
-        }
+        },
     ]
 
     const [appstatic, setappstatic] = useApp(navmain, navmainstate.navmainid,  navmainstate.navmainindex)
@@ -72,18 +73,20 @@ export default function NavMain({
 
 export function appTbodyRender({data}) {
   return (
-    <div className="h-[10vh]  dark:border dark:border-slate-700">
-        <ThemeMain>
-            <section className="absolute right-0 -top-28">
-            <CardMain>
-                <Link to={`/coupon/couponform`}>
-                <figure className="w-[70px] h-[70px] text-center  rounded-full l-button ">
-                    <p className="m-h6">+</p>
-                </figure>
-                </Link>
-            </CardMain>
+    <ThemeMain>
+        <div className="dark:border dark:border-slate-700">
+            <section className="relative">
+                <div className="absolute right-0 bottom-0">
+                <CardMain>
+                    <Link to={`/coupon/couponform`}>
+                    <figure className="w-[70px] h-[70px] text-center  rounded-full l-button ">
+                        <p className="m-h6">+</p>
+                    </figure>
+                    </Link>
+                </CardMain>
+                </div>
             </section>
-            <section className="flex flex-row justify-between">
+            <section className="h-[10vh] flex flex-row justify-between items-center">
             {data?.map(data => (<> 
                 <Link to={data.contentaction}>
                 <CardMain>
@@ -92,7 +95,7 @@ export function appTbodyRender({data}) {
                 </Link>
             </>))}
             </section>
-        </ThemeMain>
-    </div>
+        </div>
+    </ThemeMain>
   )
 }

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { RiSearchLine } from 'react-icons/ri'
 import { settingul, workoutul } from '../../content/content'
+import { Context } from '../../context/Context'
 
-import { Context } from '../../context/context'
 import useApp from '../../hook/useApp'
 import useSplit from '../../hook/useSplit'
-import CardMain from '../card/CardMain'
+import CardMain from '../../layout/card/CardMain'
 import PostMain from '../post/PostMain'
 
 export default function ZoomMain({
@@ -18,22 +18,50 @@ export default function ZoomMain({
         zoommainstate, setzoommainstate,
         fieldmainstate,
 
-        workoutdl,
-        taskdl,
-        clubdl,
-        ticketdl,
-        searchdl,
+        coupondl,
+        claimdl,
         messagedl,
         
     } = useContext(Context)
     const [splitstaticthree, setsplitstaticthree] = useSplit(3)
 
-    const companyinput = [
+    // const companyinput = [
+    //     {
+    //         zoommaindata: [
+    //             {
+    //                 zoommainrender: () => {
+    //                     return appInputRender({
+    //                         data: companyinput[0].contextdata && companyinput[0].contextdata.filter(data => data.breadauthor?.toLowerCase().includes(zoommainvalue) || data.breadtitle?.toLowerCase().includes(zoommainvalue))
+    //                     })
+    //                 },
+    //             },
+    //         ]
+    //     },
+    //     {
+    //         zoommaindata: [
+    //             {
+    //                 zoommaintitle: 'All workout',
+    //                 zoommainrender: () => {
+    //                     return appInputRender({
+    //                         data: companyinput[0].contextdata && companyinput[0].contextdata.filter(data => data.breadauthor?.toLowerCase().includes(zoommainvalue) || data.breadtitle?.toLowerCase().includes(zoommainvalue))
+    //                     })
+    //                 },
+
+    //             },
+    //         ]
+    //     },
+    // ]
+
+    const couponinput = [
         {
             zoommaindata: [
                 {
+                    zoommaintitle: 'My coupons',
                     zoommainrender: () => {
-                        return []
+                        return appInputRender({
+                            data: coupondl[0].contextdata && coupondl[0].contextdata,
+                            postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
+                        })
                     },
                 },
             ]
@@ -41,12 +69,42 @@ export default function ZoomMain({
         {
             zoommaindata: [
                 {
-                    zoommaintitle: 'All workout',
+                    zoommaintitle: 'Coupon results',
                     zoommainrender: () => {
-
-                        return companyinput[0].contextdata && companyinput[0].contextdata.filter(data => data.breadauthor?.toLowerCase().includes(zoommainvalue) || data.breadtitle?.toLowerCase().includes(zoommainvalue))
+                        return appInputRender({
+                            data:  coupondl[0].contextdata && coupondl[0].contextdata.filter(data => data.couponid?.toLowerCase().includes(zoommainvalue) || data.coupontitle?.toString()?.toLowerCase().includes(zoommainvalue)),
+                            postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
+                        })
                     },
+                },
+            ]
+        },
+    ]
 
+    const claiminput = [
+        {
+            zoommaindata: [
+                {
+                    zoommaintitle: 'All activity',
+                    zoommainrender: () => {
+                        return appInputRender({
+                            data: claimdl[0].contextdata && claimdl[0].contextdata,
+                            postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
+                        })
+                    },
+                },
+            ]
+        },
+        {
+            zoommaindata: [
+                {
+                    zoommaintitle: 'Activity results',
+                    zoommainrender: () => {
+                        return appInputRender({
+                            data:  claimdl[0].contextdata && claimdl[0].contextdata.filter(data => data.couponid?.toLowerCase().includes(zoommainvalue)),
+                            postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
+                        })
+                    },
                 },
             ]
         },
@@ -54,10 +112,20 @@ export default function ZoomMain({
 
     const zoommain = [
 
+        // {
+        //     zoommainid: 'companyinput',
+        //     zoommainref: companyinput,
+        // },
+
         {
-            zoommainid: 'companyinput',
-            zoommainref: companyinput,
+            zoommainid: 'couponinput',
+            zoommainref: couponinput,
         },
+        {
+            zoommainid: 'claiminput',
+            zoommainref: claiminput,
+        },
+
     ]
 
     useEffect(() => {
@@ -90,19 +158,12 @@ export default function ZoomMain({
                 {data?.zoommaindata?.map((dat, index) => (<>
                     <div key={index}>
                         <figcaption className="">
-                            {dat?.zoommainrender()?.length > 0 && (<>
                             <CardMain>
                             <h1 className="m-h5">{dat?.zoommaintitle}</h1>
                             </CardMain>
-                            </>)}
                         </figcaption>
                         <figure className="">
-                            {dat?.zoommainrender()?.map((post, i) => (<>
-                                <div key={i}>
-                                {zoommainstatic.zoommainid === 'couponinput' 
-                                && <PostMain postmaindata={post} postmainstatic={{postmainid: 'settingaddress', postmainindex: 0}} />}
-                                </div>
-                            </>))}
+                            {dat?.zoommainrender()}
                         </figure>
                     </div>
                 </>))}
@@ -110,6 +171,18 @@ export default function ZoomMain({
             </section>
 
         </main>
+    </div>
+  )
+}
+
+export function appInputRender({data, postmainstatic}) {
+  return (
+    <div>
+        <section className="">
+            {data?.map(data => (<>
+            <PostMain postmaindata={data} postmainstatic={postmainstatic} />
+            </>))}
+        </section>
     </div>
   )
 }

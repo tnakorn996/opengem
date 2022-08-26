@@ -10,13 +10,15 @@ export const Provider = ({
     children 
 }) => {
     const parseuser = JSON.parse(window.localStorage.getItem("iq-user"));
-    if(!parseuser) {window.localStorage.setItem("iq-user", JSON.stringify([]))}
+    if(!parseuser) {window.localStorage.setItem("opengem-user", JSON.stringify([]))}
     const [appstate, setappstate] = useState()
+    const [tabmainstate, settabmainstate] = useState({ tabmainindex: 0 })
     const [fieldmainstate, setfieldmainstate] = useState(true)
     const [dtamainstate, setdtamainstate] = useState(true)
     const [auth, setauth] = useState()
     const [useruserid, setuseruserid] = useState()
     const [couponuserid, setcouponuserid] = useState()
+    const [claimuserid, setclaimuserid] = useState()
 
     useEffect(() => {
         setauth(supabase.auth.session())
@@ -30,7 +32,7 @@ export const Provider = ({
             const ref = auth.user.id
             contextSelectUserUserid(ref)
             contextSelectCouponUserid(ref)
-
+            contextSelectClaimUserid(ref)
             
         } 
     }, [auth])
@@ -45,6 +47,11 @@ export const Provider = ({
         if(data) {setcouponuserid(data)}
     }
 
+    const contextSelectClaimUserid = async (first) => {
+        const { data, error} = await supabase.from('claim').select(`*, couponid!inner(*)`).eq('couponid.userid', first)
+        if(data) {setclaimuserid(data)}
+    }
+
     const userdl = [
         {
             contextid: `my`,
@@ -56,7 +63,14 @@ export const Provider = ({
         {
             contextid: `my`,
             contextdata: couponuserid && couponuserid,
-        }
+        },
+    ]
+
+    const claimdl = [
+        {
+            contextid: `my`,
+            contextdata: claimuserid && claimuserid,
+        },
     ]
 
     const messagedl = [
@@ -66,15 +80,39 @@ export const Provider = ({
         }
     ]
 
+    // const guidedl = [
+    //     {
+    //         spreadid: 'activity',
+    //         spreadtitle: 'My activity',
+    //         spreadicon: `💬`,
+    //         spreaddata: () => {
+    //             if(typeof useruserid === 'undefined') return null
+    //             return userul.map(data => (
+    //                 {
+    //                     spreadidtwo: data.breadid,
+    //                     spreadhref: `/guide/guideindex/` + data.breadid,
+    //                     spreaddetail: `${data.breadtitle}`,
+    //                     spreadrender: () => {
+    //                         const ref = useruserid[0][data.breadid] === null
+    //                         return contextRenderFive(ref, data.breadid, data.breadaction)
+    //                     }
+    //                 }
+    //             ))
+    //         }
+    //     },
+    // ]
+
     return (
         <Context.Provider value={{
         appstate, setappstate,
         fieldmainstate, setfieldmainstate,
         dtamainstate, setdtamainstate,
+        tabmainstate, settabmainstate,
 
         auth,
         userdl,
         coupondl,
+        claimdl,
         messagedl,
         
         }} >

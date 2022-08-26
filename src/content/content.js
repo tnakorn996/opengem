@@ -1,31 +1,59 @@
 
 export const appmainul = [
-    {
-        contentid: `authmain`,
-        contenttitle: `Welcome`,
-        contentaction: `/auth/authmain`,
-    },
-    {
-        contentid: `authfrom`,
-        contenttitle: `Welcome`,
-        contentaction: `/auth/authform`,
-    },
-    {
-        contentid: `usermain`,
-        contenttitle: `User`,
-        contentaction: `/user/usermain`,
-    },
+    // {
+    //     contentid: `authmain`,
+    //     contenttitle: `Welcome`,
+    //     contentaction: `/auth/authmain/`,
+    // },
+    // {
+    //     contentid: `authfrom`,
+    //     contenttitle: `Welcome`,
+    //     contentaction: `/auth/authform/`,
+    // },
+    // {
+    //     contentid: `userform`,
+    //     contenttitle: `User`,
+    //     contentaction: `/user/userform/`,
+    // },
     {
         contentid: `couponmain`,
         contenttitle: `Coupon`,
-        contentaction: `/coupon/couponmain`,
+        contentaction: `/coupon/couponmain/`,
     },
+    // {
+    //     contentid: `couponform`,
+    //     contenttitle: `Create coupo`,
+    //     contentaction: `/coupon/couponform/`,
+    // },
     {
-        contentid: `couponform`,
-        contenttitle: `Create coupo`,
-        contentaction: `/coupon/couponform`,
-    }
+        contentid: `claimain`,
+        contenttitle: `Status`,
+        contentaction: `/claim/claimmain/`,
+    },
 ]
+
+// export const settingul = [
+//     {
+//         contentid: `authfrom`,
+//         contenttitle: `Welcome`,
+//         contentaction: `/auth/authform`,
+//     },
+//     {
+//         contentid: `userform`,
+//         contenttitle: `User`,
+//         contentaction: `/user/userform`,
+//     },
+//     {
+//         contentid: `couponmain`,
+//         contenttitle: `Coupon`,
+//         contentaction: `/coupon/couponmain`,
+//     },
+//     {
+//         contentid: `couponform`,
+//         contenttitle: `Create coupo`,
+//         contentaction: `/coupon/couponform`,
+//     }
+// ]
 
 export const settingmainul = [
  
