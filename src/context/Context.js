@@ -35,7 +35,7 @@ export const Provider = ({
             contextSelectClaimUserid(ref)
             
         } 
-    }, [auth])
+    }, [auth, fieldmainstate])
 
     const contextSelectUserUserid = async (first) => {
         const { data, error} = await supabase.from('user').select(`*`).eq('userid', first)
@@ -77,7 +77,11 @@ export const Provider = ({
         {
             contextid: `coupon`,
             contextdata: couponuserid && couponuserid,
-        }
+        },
+         {
+            contextid: `claim`,
+            contextdata: claimuserid && claimuserid,
+        },
     ]
 
     // const guidedl = [

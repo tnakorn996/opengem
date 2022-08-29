@@ -43,18 +43,9 @@ export default function PostMain({
     const couponaddress = [
         {
             postmainrender: () => {
-                for(const data of claimdl[0]?.contextdata){
-                    if(postmaindata.couponid === data.couponid.couponid){
-                        return couponMainRender({
-                            data: Object.assign(postmaindata, data)
-                        })
-                    } else {
-                        return couponMainRender({
-                            data: Object.assign(postmaindata)
-                        })
-                    }
-                }
-                
+                return couponMainRender({
+                    data: Object.assign(postmaindata)
+                })
             }
         },
         {
@@ -108,8 +99,9 @@ export default function PostMain({
         }
     ]
 
-    const [appstatic, setappstatic] = useApp(postmain, postmainstatic.postmainid, postmainstatic.postmainindex, 
-        postmainstatic, postmaindata, fieldmainstate, messagedl)
+    const [appstatic, setappstatic] = useApp(postmain, postmainstatic.postmainid, postmainstatic.postmainindex, postmainstatic, postmaindata, fieldmainstate, messagedl)
+
+
 // console.log('appstatic', appstatic)
   return (
     <div>
@@ -148,14 +140,14 @@ export function userMainRender({data}) {
 
 
 export function couponMainRender({data}) {
-    console.log('data', data)
+    // console.log('data', data)
     return (
         <div>
         <section className="">
             <CardMain>
             <SheetMain>
             <article className="flex flex-row justify-between">
-                {/* <CardMain>
+                <CardMain>
                 <ChipMain>
                 <ThemeMainTwo>
                 <figure className="w-[60px] h-[60px] flex justify-center">
@@ -165,7 +157,7 @@ export function couponMainRender({data}) {
                 </figure>
                 </ThemeMainTwo>
                 </ChipMain>
-                </CardMain> */}
+                </CardMain>
                 <figcaption className="w-full flex flex-row items-center justify-between">
                     <Link to={`/coupon/couponindex/${data?.couponid?.couponid || data?.couponid}`}>
                     <CardMain>
@@ -179,7 +171,7 @@ export function couponMainRender({data}) {
                     </DtaMain>
                 </figcaption>                
             </article>
-            <article className="">
+            {/* <article className="">
                 <CardMain>
                 <ChipMain>
                 <ThemeMainTwo>
@@ -199,7 +191,7 @@ export function couponMainRender({data}) {
                 </ChipMain>
                 </CardMain>
                 
-            </article>
+            </article> */}
             </SheetMain>
             </CardMain>
         </section>

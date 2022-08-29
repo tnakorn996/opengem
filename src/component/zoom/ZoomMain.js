@@ -3,12 +3,14 @@ import { RiSearchLine } from 'react-icons/ri'
 import { settingul, workoutul } from '../../content/content'
 import { Context } from '../../context/Context'
 
+import './index.css'
 import useApp from '../../hook/useApp'
 import useSplit from '../../hook/useSplit'
 import CardMain from '../../layout/card/CardMain'
 import PostMain from '../post/PostMain'
 
 export default function ZoomMain({
+    
     zoommainstatic,
 
 }) {
@@ -17,6 +19,7 @@ export default function ZoomMain({
     const {
         zoommainstate, setzoommainstate,
         fieldmainstate,
+        appstate, setappstate,
 
         coupondl,
         claimdl,
@@ -25,43 +28,32 @@ export default function ZoomMain({
     } = useContext(Context)
     const [splitstaticthree, setsplitstaticthree] = useSplit(3)
 
-    // const companyinput = [
-    //     {
-    //         zoommaindata: [
-    //             {
-    //                 zoommainrender: () => {
-    //                     return appInputRender({
-    //                         data: companyinput[0].contextdata && companyinput[0].contextdata.filter(data => data.breadauthor?.toLowerCase().includes(zoommainvalue) || data.breadtitle?.toLowerCase().includes(zoommainvalue))
-    //                     })
-    //                 },
-    //             },
-    //         ]
-    //     },
-    //     {
-    //         zoommaindata: [
-    //             {
-    //                 zoommaintitle: 'All workout',
-    //                 zoommainrender: () => {
-    //                     return appInputRender({
-    //                         data: companyinput[0].contextdata && companyinput[0].contextdata.filter(data => data.breadauthor?.toLowerCase().includes(zoommainvalue) || data.breadtitle?.toLowerCase().includes(zoommainvalue))
-    //                     })
-    //                 },
-
-    //             },
-    //         ]
-    //     },
-    // ]
-
     const couponinput = [
         {
             zoommaindata: [
                 {
-                    zoommaintitle: 'My coupons',
+                    zoommaintitle: 'Unclaimed coupon',
                     zoommainrender: () => {
-                        return appInputRender({
-                            data: coupondl[0].contextdata && coupondl[0].contextdata,
-                            postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
-                        })
+                        if(!Array.isArray(coupondl[0].contextdata)
+                        || !Array.isArray(claimdl[0].contextdata)) return null
+                        if(claimdl[0].contextdata.length > 0) {
+                            const array = []
+                            coupondl[0].contextdata.forEach(data => {
+                                const filter = claimdl[0].contextdata.filter(dat => data.couponid === dat.couponid.couponid)
+                                if(filter.length === 0) {
+                                    array.push(data)
+                                }
+                            })
+                            return appInputRender({
+                                data: array,
+                                postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
+                            })
+                        } else  {
+                             return appInputRender({
+                                data: coupondl[0].contextdata ,
+                                postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
+                            })
+                        }    
                     },
                 },
             ]
@@ -85,12 +77,26 @@ export default function ZoomMain({
         {
             zoommaindata: [
                 {
-                    zoommaintitle: 'All activity',
+                    zoommaintitle: 'Claimed coupon',
                     zoommainrender: () => {
-                        return appInputRender({
-                            data: claimdl[0].contextdata && claimdl[0].contextdata,
-                            postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
-                        })
+                        if(!Array.isArray(coupondl[0].contextdata)
+                        || !Array.isArray(claimdl[0].contextdata)) return null
+                        if(claimdl[0].contextdata.length > 0) {
+                            const array = []
+                            claimdl[0].contextdata.forEach(data => {
+                                const filter = coupondl[0].contextdata.filter(dat => dat.couponid === data.couponid.couponid)
+                                array.push(filter[0])
+                            })
+                            return appInputRender({
+                                data: array,
+                                postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
+                            })
+                        } else  {
+                             return appInputRender({
+                                data: [],
+                                postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
+                            })
+                        }    
                     },
                 },
             ]
@@ -98,11 +104,11 @@ export default function ZoomMain({
         {
             zoommaindata: [
                 {
-                    zoommaintitle: 'Activity results',
+                    zoommaintitle: 'Coupon results',
                     zoommainrender: () => {
                         return appInputRender({
-                            data:  claimdl[0].contextdata && claimdl[0].contextdata.filter(data => data.couponid?.toLowerCase().includes(zoommainvalue)),
-                            postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
+                            data:  coupondl[0].contextdata && coupondl[0].contextdata.filter(data => data.couponid?.toLowerCase().includes(zoommainvalue) || data.coupontitle?.toString()?.toLowerCase().includes(zoommainvalue)),
+                            postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
                         })
                     },
                 },
@@ -111,12 +117,6 @@ export default function ZoomMain({
     ]
 
     const zoommain = [
-
-        // {
-        //     zoommainid: 'companyinput',
-        //     zoommainref: companyinput,
-        // },
-
         {
             zoommainid: 'couponinput',
             zoommainref: couponinput,
@@ -133,8 +133,9 @@ export default function ZoomMain({
         if(zoommainvalue !== ''){setzoommainindex(1)}
     }, [zoommainvalue])
 
-    const [appstatic, setappstatic] = useApp(zoommain, zoommainstatic.zoommainid, zoommainindex, zoommainvalue, splitstaticthree, messagedl)
-// console.log('appstatic', appstatic)
+    const [appstatic, setappstatic] = useApp(zoommain, zoommainstatic.zoommainid, zoommainindex, 
+        appstate, zoommainvalue, splitstaticthree, messagedl)
+// console.log('appstaticss', appstatic)
     // if(!workoutdl && !taskdl && !clubdl && !ticketdl) return null
     // console.log('fieldmainstate', fieldmainstate)
   return (
@@ -157,11 +158,11 @@ export default function ZoomMain({
             {appstatic?.map((data) => (<>
                 {data?.zoommaindata?.map((dat, index) => (<>
                     <div key={index}>
-                        <figcaption className="">
+                        {dat?.zoommainrender()?.props.children.props.children.length > 0 && <figcaption className="">
                             <CardMain>
                             <h1 className="m-h5">{dat?.zoommaintitle}</h1>
                             </CardMain>
-                        </figcaption>
+                        </figcaption>}
                         <figure className="">
                             {dat?.zoommainrender()}
                         </figure>
@@ -178,7 +179,7 @@ export default function ZoomMain({
 export function appInputRender({data, postmainstatic}) {
   return (
     <div>
-        <section className="">
+        <section className="no-scrollbar">
             {data?.map(data => (<>
             <PostMain postmaindata={data} postmainstatic={postmainstatic} />
             </>))}

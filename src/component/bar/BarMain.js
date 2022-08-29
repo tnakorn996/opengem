@@ -34,6 +34,7 @@ export default function BarMain({
             })
         }
         if(location.pathname.includes(`index`)
+        || location.pathname.includes(`status`)
         || location.pathname.includes(`form`)){
             setbarmainstate({
                 barmainid: `apptfoot`,

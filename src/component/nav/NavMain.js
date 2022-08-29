@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { appmainul } from '../../content/content'
 
@@ -7,10 +7,16 @@ import CardMain from '../../layout/card/CardMain'
 import ThemeMain from '../../layout/theme/ThemeMain'
 import ChipMain from '../../layout/chip/ChipMain'
 import StaMain from '../sta/StaMain'
+import { Context } from '../../context/Context'
 
 export default function NavMain({
 
 }) {
+    const {
+
+        auth,
+
+    } = useContext(Context)
     const location = useLocation()
 
     const [navmainstate, setnavmainstate] = useState({
@@ -58,6 +64,8 @@ export default function NavMain({
 
     const [appstatic, setappstatic] = useApp(navmain, navmainstate.navmainid,  navmainstate.navmainindex)
 
+    if(!auth || typeof auth === 'undefined') return null
+    
   return (
     <div>
         <main className="">

@@ -146,7 +146,6 @@ export function appCaptionRenderTwo({data}) {
   return (
     <div>
       <main className="">
-      <CardMain>
       <section className={data.style}>
           <div className="h-[80vh] flex flex-col justify-center text-center items-center">
           <CardMain >
@@ -156,18 +155,17 @@ export function appCaptionRenderTwo({data}) {
           </CardMain>
           <figcaption className="">
             <h1 className="text-2xl  m-h4">{data?.data.alertmaintitle}</h1>
-            {data.data.alertmaindata?.map(data => (<>
+            {/* {data.data.alertmaindata?.map(data => (<>
             <p className="font-light">{data.alertmainsubtitle}</p>
-          </>))}
-            <CardMain>
+          </>))} */}
+            {/* <CardMain>
             <Link to={-1}>
             <button className="m-button">Continue</button>
             </Link>
-            </CardMain>
+            </CardMain> */}
           </figcaption>
           </div>
       </section>
-      </CardMain>
       </main>
     </div>
   )

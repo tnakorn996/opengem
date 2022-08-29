@@ -5,6 +5,7 @@ import useSlice from "../../hook/useSplit";
 import useApp from "../../hook/useApp";
 import AuthForm from "../../page/auth/AuthForm";
 import CardMain from "../../layout/card/CardMain";
+import ZoomMain from "../zoom/ZoomMain";
 // import FeedMain from "../../component/feed/FeedMain";
 // import CardMain from "../card/CardMain";
 // import ZoomMain from "../zoom/ZoomMain";
@@ -70,17 +71,49 @@ export default function TabMain({
     },
   ];
 
+  const couponfieldset = [
+    {
+      tabmaintitle: "Unclaimed",
+      tabmainrender: () => {
+        return appFieldsetRender({
+          component: <ZoomMain zoommainstatic={{zoommainid: `couponinput`}} />
+
+        });
+      },
+    },
+    {
+      tabmaintitle: "Claimed",
+      tabmainrender: () => {
+        return appFieldsetRender({
+          component: <ZoomMain zoommainstatic={{zoommainid: `claiminput`}} />
+        });
+      },
+    },
+    {
+      tabmaintitle: "Donated",
+      tabmainrender: () => {
+        return appFieldsetRender({
+          component: <ZoomMain zoommainstatic={{zoommainid: `couponinput`}} />
+        });
+      },
+    },
+  ];
+
   const tabmain = [
     {
       tabmainid: "authfieldset",
       tabmainref: authfieldset,
+    },
+    {
+      tabmainid: "couponfieldset",
+      tabmainref: couponfieldset,
     },
   ];
 
   const [appstatic, setappstatic] = useApp(
     tabmain,
     tabmainstatic.tabmainid,
-    tabmainstatic.tabmainindex
+    null
   );
 
   return (

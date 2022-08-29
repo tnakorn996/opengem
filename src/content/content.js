@@ -25,11 +25,11 @@ export const appmainul = [
     //     contenttitle: `Create coupo`,
     //     contentaction: `/coupon/couponform/`,
     // },
-    {
-        contentid: `claimain`,
-        contenttitle: `Status`,
-        contentaction: `/claim/claimmain/`,
-    },
+    // {
+    //     contentid: `claimain`,
+    //     contenttitle: `Status`,
+    //     contentaction: `/claim/claimmain/`,
+    // },
 ]
 
 // export const settingul = [
