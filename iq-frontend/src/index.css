@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+
+    body {
+        @apply text-sm bg-white text-black dark:bg-slate-800 dark:text-white;
+    }
+/* 
+    article {
+        @apply cursor-pointer duration-1000 border-black;
+    } */
+
+    button {
+        @apply cursor-pointer rounded-3xl uppercase;
+    }
+
+    a {
+        @apply cursor-pointer hover:underline;
+    }
+
+    input, textarea {
+        @apply w-full  focus:outline-none font-extralight duration-100 rounded-3xl;
+    }
+
+    /* .m-section {
+        @apply bg-white dark:bg-slate-800;
+    } */
+
+    .m-button {
+        @apply text-sm py-[20px] px-[20px] bg-black text-white dark:bg-white dark:text-black font-medium border border-black;
+    }
+
+    .l-button {
+        @apply text-sm py-[20px] px-[20px] bg-white text-black dark:bg-black dark:text-white font-medium border border-black;
+    }
+
+    .m-input {
+        @apply text-base p-[10px] bg-slate-100 dark:bg-slate-900 dark:text-white;
+    }
+
+    .l-input {
+        @apply text-base p-[20px] bg-slate-100 dark:bg-slate-900 dark:text-white;
+    }
+
+    .m-h1 {
+        @apply text-[10px] font-medium leading-normal;
+    }
+
+    .l-h1 {
+        @apply text-[10px] text-gray-400 font-light leading-normal;
+    }
+
+    .m-h2 {
+        @apply text-[12px] font-medium leading-normal;
+    }
+
+    .l-h2 {
+        @apply text-[12px] text-gray-400 font-light leading-normal;
+    }
+
+    .m-h3 {
+        @apply text-[11px] md:text-[14px] font-medium leading-normal;
+    }
+
+    .l-h3 {
+        @apply text-[11px] md:text-[14px] text-gray-400 font-light leading-normal;
+    }
+
+    .m-h4 {
+        @apply text-[13px] md:text-[16px] font-medium leading-normal;
+    }
+
+    .l-h4 {
+        @apply text-[13px] md:text-[16px] text-gray-400 font-light leading-normal;
+    }
+
+    .m-h5 {
+        @apply text-[16px] md:text-[18px] font-medium leading-normal;
+    }
+
+    .l-h5 {
+        @apply text-[16px] md:text-[18px]  text-gray-400 font-light leading-normal;
+    }
+
+    .m-h6 {
+        @apply text-[19px] md:text-[22px]  font-medium leading-normal;
+    }
+
+    .l-h6 {
+        @apply text-[19px] md:text-[22px]  text-gray-400 font-light leading-normal; 
+    }
+
+}
