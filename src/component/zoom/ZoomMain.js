@@ -133,7 +133,7 @@ export default function ZoomMain({
                     <div key={index}>
                         <figcaption className="">
                             <CardMain>
-                            <h1 className="m-h5">{dat?.zoommaintitle} ({dat?.zoommainrender()?.props.children.props.children.length})</h1>
+                            <h1 className="m-h5">{dat?.zoommaintitle} ({dat?.zoommainrender()?.props?.children?.props?.children?.length})</h1>
                             </CardMain>
                         </figcaption>
                         <figure className="">
