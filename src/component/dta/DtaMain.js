@@ -54,10 +54,27 @@ export default function AtaMain({
         },
     ]
 
+    const filterdframe = [
+        {
+            dtamainrender: () => {
+                return {
+                    appid: 'backdropmain',
+                    appidtwo: 'modalmain',
+                    appidthree: 'filterdialog',
+                    appindex: 0,
+                }
+            } 
+        },
+    ]
+
     const dtamain = [
         {
             dtamainid: 'claimdframe',
             dtamainref: claimdframe
+        },
+        {
+            dtamainid: 'filterdframe',
+            dtamainref: filterdframe
         },
     ]
 

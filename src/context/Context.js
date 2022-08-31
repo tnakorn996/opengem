@@ -9,12 +9,16 @@ export const Context = createContext()
 export const Provider = ({ 
     children 
 }) => {
-    const parseuser = JSON.parse(window.localStorage.getItem("iq-user"));
+    const parseuser = JSON.parse(window.localStorage.getItem("opengem-user"));
+    const parsefilter = JSON.parse(window.localStorage.getItem("opengem-filterpframe"));
     if(!parseuser) {window.localStorage.setItem("opengem-user", JSON.stringify([]))}
+    // if(!parsefilter) {window.localStorage.setItem("opengem-filterpframe", JSON.stringify([{contentid: `claim`},{contentid: `paid`}]))}
+    if(!parsefilter) {window.localStorage.setItem("opengem-filterpframe", JSON.stringify([]))}
     const [appstate, setappstate] = useState()
     const [tabmainstate, settabmainstate] = useState({ tabmainindex: 0 })
     const [fieldmainstate, setfieldmainstate] = useState(true)
     const [dtamainstate, setdtamainstate] = useState(true)
+    const [ptamainstate, setptamainstate] = useState(true)
     const [auth, setauth] = useState()
     const [useruserid, setuseruserid] = useState()
     const [couponuserid, setcouponuserid] = useState()
@@ -37,7 +41,7 @@ export const Provider = ({
             contextSelectCheckUserid(ref)
             
         } 
-    }, [auth, fieldmainstate])
+    }, [auth, fieldmainstate, ptamainstate])
 
     const contextSelectUserUserid = async (first) => {
         const { data, error} = await supabase.from('user').select(`*`).eq('userid', first)
@@ -130,6 +134,7 @@ export const Provider = ({
         fieldmainstate, setfieldmainstate,
         dtamainstate, setdtamainstate,
         tabmainstate, settabmainstate,
+        ptamainstate, setptamainstate,
 
         auth,
         userdl,

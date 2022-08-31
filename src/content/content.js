@@ -62,21 +62,21 @@ export const claimul = [
         contentid: `claim`,
         contenttitle: `Claim`,
     },
-    {
-        contentid: `unclaim`,
-        contenttitle: `Un-claim`,
-    },
+    // {
+    //     contentid: `unclaim`,
+    //     contenttitle: `Un-claim`,
+    // },
  
 ]
 
-export const contributeul = [
+export const checkul = [
     {
         contentid: `paid`,
         contenttitle: `Paid`,
     },
-    {
-        contentid: `unpaid`,
-        contenttitle: `Un-Paid`,
-    },
+    // {
+    //     contentid: `unpaid`,
+    //     contenttitle: `Un-Paid`,
+    // },
  
 ]

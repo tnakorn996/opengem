@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import FeedMain from '../../component/feed/FeedMain'
 import ZoomMain from '../../component/zoom/ZoomMain'

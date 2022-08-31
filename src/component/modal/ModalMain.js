@@ -9,6 +9,7 @@ import ChipMain from '../../layout/chip/ChipMain'
 // import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
 import ClaimForm from '../../page/claim/ClaimForm'
 import ClaimStatus from '../../page/claim/ClaimStatus'
+import FilterMain from '../../page/filter/FilterMain'
 
 export default function ModalMain() {
     const { 
@@ -30,11 +31,23 @@ export default function ModalMain() {
         },
     ]
 
+    const filterdialog = [
+        {
+            modalmainrender: () => {
+                return <FilterMain />
+            }
+        },
+    ]
+
     const modalmain = [
         {
             modalmainid: `claimdialog`,
             modalmainref: claimdialog,
-        }
+        },
+        {
+            modalmainid: `filterdialog`,
+            modalmainref: filterdialog,
+        },
     ]
 
     const [appstatic, setappstatic] = useApp(modalmain, appstate.appidthree, appstate.appindex)

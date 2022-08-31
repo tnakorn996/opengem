@@ -17,6 +17,7 @@ import SpinMain from '../../layout/spin/SpinMain'
 // import ThemeMain from '../../layout/theme/ThemeMain'
 import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
 import FieldMain from '../field/FieldMain'
+import PtaMain from '../pta/PtaMain'
 
 export default function PostMain({
     postmaindata,
@@ -46,10 +47,13 @@ export default function PostMain({
         }
     ]
 
+    // console.log('postmaindata', postmaindata)
+
     const couponaddress = [
         {
             postmainrender: () => {
-                if(!Array.isArray(claimdl[0]?.contextdata)) return null
+                if(!Array.isArray(claimdl[0]?.contextdata)
+                || !Array.isArray(checkdl[0]?.contextdata)) return null
                 const array = []
                 const arraytwo = []
                 if(claimdl[0]?.contextdata.length > 0) {
@@ -58,8 +62,6 @@ export default function PostMain({
                             array.push(data)
                         } 
                     })
-                    // const filter = claimdl[0]?.contextdata?.filter(data => data.couponid.couponid === postmaindata.couponid)
-                    // array.push(Object.assign(filter))
                 } 
                 if(checkdl[0]?.contextdata.length > 0) {
                     checkdl[0]?.contextdata?.forEach(data => {
@@ -67,8 +69,6 @@ export default function PostMain({
                             arraytwo.push(data)
                         } 
                     })
-                    // const filter = claimdl[0]?.contextdata?.filter(data => data.couponid.couponid === postmaindata.couponid)
-                    // array.push(Object.assign(filter))
                 } 
                 return couponMainRender({
                     data: postmaindata,
@@ -132,6 +132,16 @@ export default function PostMain({
         },
     ]
 
+    const filteraddress = [
+        {
+            postmainrender: () => {
+                return filterMainRender({
+                    data: postmaindata
+                })
+            }
+        },
+    ]
+
     const postmain = [
         {
             postmainid: `useraddress`,
@@ -141,10 +151,14 @@ export default function PostMain({
             postmainid: `couponaddress`,
             postmainref: couponaddress,
         },
-                {
+        {
             postmainid: `claimaddress`,
             postmainref: claimaddress,
-        }
+        },
+        {
+            postmainid: `filteraddress`,
+            postmainref: filteraddress,
+        },
     ]
 
     const [appstatic, setappstatic] = useApp(postmain, postmainstatic.postmainid, postmainstatic.postmainindex, 
@@ -189,7 +203,7 @@ export function userMainRender({data}) {
 
 
 export function couponMainRender({data, datatwo, datathree}) {
-    // console.log('datatwo', datatwo)
+    // console.log('data', data)
     return (
         <div>
         <section className="">
@@ -368,6 +382,27 @@ export function claimMainRenderFour({data, datatwo, href}) {
                 </Link>
                 </CardMain>
             </section>
+    </div>
+  )
+}
+
+export function filterMainRender({data}) {
+  return (
+    <div>
+        <section className="">
+            <CardMain>
+            <SheetMain>
+            <CardMain>
+            <article className="flex items-center justify-between">
+                <p className="m-h5 uppercase">{data?.contenttitle}</p>
+                <PtaMain 
+                ptamaindata={data}
+                ptamainstatic={{ptamainid: `filterpframe`}} />
+            </article>
+            </CardMain>
+            </SheetMain>
+            </CardMain>
+        </section>
     </div>
   )
 }

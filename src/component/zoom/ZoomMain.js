@@ -7,6 +7,7 @@ import useApp from '../../hook/useApp'
 import useSplit from '../../hook/useSplit'
 import CardMain from '../../layout/card/CardMain'
 import PostMain from '../post/PostMain'
+import DtaMain from '../dta/DtaMain'
 
 export default function ZoomMain({
     zoommainstatic,
@@ -17,13 +18,20 @@ export default function ZoomMain({
     const {
         zoommainstate, setzoommainstate,
         fieldmainstate,
+        ptamainstate,
 
         coupondl,
         claimdl,
+        checkdl,
         messagedl,
         
     } = useContext(Context)
     const [splitstaticthree, setsplitstaticthree] = useSplit(3)
+
+    useEffect(() => {
+        if(zoommainvalue === ''){setzoommainindex(0)}
+        if(zoommainvalue !== ''){setzoommainindex(1)}
+    }, [zoommainvalue])
 
     const couponinput = [
         {
@@ -31,10 +39,50 @@ export default function ZoomMain({
                 {
                     zoommaintitle: 'My coupons',
                     zoommainrender: () => {
-                        return appInputRender({
-                            data: coupondl[0].contextdata && coupondl[0].contextdata,
-                            postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
-                        })
+                        // if(!Array.isArray(claimdl[0].contextdata)) return null
+                        const empty = []
+                        const parsefilter = JSON.parse(window.localStorage.getItem("opengem-filterpframe"));
+                        const array = coupondl[0].contextdata
+                            for(const data of array){
+                                claimdl[0].contextdata.forEach(dat => {
+                                    if(data.couponid === dat.couponid.couponid){
+                                        Object.assign(data, {claimboolean: `claim`})
+                                    }
+                                })
+                                checkdl[0].contextdata.forEach(dat => {
+                                    if(data.couponid === dat.couponid.couponid){
+                                        Object.assign(data, {checkboolean: `paid`})
+                                    }
+                                })
+                            }
+
+                            // console.log('arrays', array)
+                            // console.log('parsefilter', parsefilter)
+                            array.forEach(data => {
+                                if(parsefilter.length === 0){
+                                    empty.push(data)
+                                }
+                                if(parsefilter.some(dat => dat['contentid'] === data.claimboolean)
+                                && parsefilter.some(dat => dat['contentid'] === data.checkboolean)){
+                                    empty.push(data)
+                                    console.log('first')
+                                }
+                                if(parsefilter.length !== 0 
+                                    && parsefilter.every(dat => dat['contentid'] === data.claimboolean)){
+                                    empty.push(data)
+                                    console.log('sec')
+                                }
+                                if(parsefilter.length !== 0 
+                                    && parsefilter.every(dat => dat['contentid'] === data.checkboolean )){
+                                    empty.push(data)
+                                    console.log('th')
+                                }
+                                
+                            })
+                            return appInputRender({
+                                data: empty,
+                                postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
+                            })
                     },
                 },
             ]
@@ -54,60 +102,15 @@ export default function ZoomMain({
         },
     ]
 
-    const claiminput = [
-        {
-            zoommaindata: [
-                {
-                    zoommaintitle: 'All activity',
-                    zoommainrender: () => {
-                        return appInputRender({
-                            data: claimdl[0].contextdata && claimdl[0].contextdata,
-                            postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
-                        })
-                    },
-                },
-            ]
-        },
-        {
-            zoommaindata: [
-                {
-                    zoommaintitle: 'Activity results',
-                    zoommainrender: () => {
-                        return appInputRender({
-                            data:  claimdl[0].contextdata && claimdl[0].contextdata.filter(data => data.couponid?.toLowerCase().includes(zoommainvalue)),
-                            postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
-                        })
-                    },
-                },
-            ]
-        },
-    ]
-
     const zoommain = [
-
-        // {
-        //     zoommainid: 'companyinput',
-        //     zoommainref: companyinput,
-        // },
-
         {
             zoommainid: 'couponinput',
             zoommainref: couponinput,
         },
-        {
-            zoommainid: 'claiminput',
-            zoommainref: claiminput,
-        },
-
     ]
 
-    useEffect(() => {
-        if(zoommainvalue === ''){setzoommainindex(0)}
-        if(zoommainvalue !== ''){setzoommainindex(1)}
-    }, [zoommainvalue])
-
     const [appstatic, setappstatic] = useApp(zoommain, zoommainstatic.zoommainid, zoommainindex, 
-         zoommainvalue, splitstaticthree, messagedl)
+         zoommainvalue, splitstaticthree, messagedl, ptamainstate)
 // console.log('appstatic', appstatic)
     // if(!workoutdl && !taskdl && !clubdl && !ticketdl) return null
     // console.log('fieldmainstate', fieldmainstate)
@@ -126,6 +129,15 @@ export default function ZoomMain({
                 </div>
                 </CardMain>
             </section>
+
+            {/* <CardMain> */}
+            <section className="px-[20px] grid grid-cols-2 gap-2">
+                <DtaMain dtamaindata={{dtamainhref: `/filter/filtermain`}} dtamainstatic={{dtamainid: `filterdframe`, dtamainindex: 0}} >
+                <button className="w-full  l-button">Filters</button>
+                </DtaMain>
+                <button className="w-full  l-button">Sort</button>
+            </section>
+            {/* </CardMain> */}
 
             <section className="">
             {appstatic?.map((data) => (

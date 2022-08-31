@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { claimul, contributeul } from '../../content/content'
+import { claimul, checkul } from '../../content/content'
 import useApp from '../../hook/useApp'
 
 export default function ChoiceMain({
@@ -18,10 +18,10 @@ export default function ChoiceMain({
         }
     ]
 
-    const contributetextarea = [
+    const checktextarea = [
         {
             choicemainrender: () => { 
-                return contributeul
+                return checkul
             }
         }
     ]
@@ -32,8 +32,8 @@ export default function ChoiceMain({
             choicemainref: claimtextarea,
         },
         {
-            choicemainid: `contributetextarea`,
-            choicemainref: contributetextarea,
+            choicemainid: `checktextarea`,
+            choicemainref: checktextarea,
         },
     ]
 
