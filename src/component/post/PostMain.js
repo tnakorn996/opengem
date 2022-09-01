@@ -18,6 +18,7 @@ import SpinMain from '../../layout/spin/SpinMain'
 import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
 import FieldMain from '../field/FieldMain'
 import PtaMain from '../pta/PtaMain'
+import RtaMain from '../rta/RtaMain'
 
 export default function PostMain({
     postmaindata,
@@ -36,6 +37,16 @@ export default function PostMain({
 
     } = useContext(Context)
     const [splitstaticthree, setsplitstaticthree] = useSplit(3)
+
+    const appaddress = [
+        {
+            postmainrender: () => {
+                return appMainRender({
+                    data: postmaindata
+                })
+            }
+        }
+    ]
 
     const useraddress = [
         {
@@ -142,7 +153,21 @@ export default function PostMain({
         },
     ]
 
+    const sortaddress = [
+        {
+            postmainrender: () => {
+                return sortMainRender({
+                    data: postmaindata
+                })
+            }
+        },
+    ]
+
     const postmain = [
+              {
+            postmainid: `appaddress`,
+            postmainref: appaddress,
+        },
         {
             postmainid: `useraddress`,
             postmainref: useraddress,
@@ -158,6 +183,10 @@ export default function PostMain({
         {
             postmainid: `filteraddress`,
             postmainref: filteraddress,
+        },
+                {
+            postmainid: `sortaddress`,
+            postmainref: sortaddress,
         },
     ]
 
@@ -175,6 +204,23 @@ export default function PostMain({
                 </>))}
             </section>
         </main>
+    </div>
+  )
+}
+
+export function appMainRender({data}) {
+  return (
+    <div>
+        <section className="">
+            <Link to={data?.contentaction}>
+                <CardMain>
+            <article className="flex items-center flex-row justify-center gap-2  m-h4 uppercase">
+                    <p className="">{data?.contenticon}</p>
+                    <p className="">{data?.contenttitle}</p>
+            </article>
+                </CardMain>
+            </Link>
+        </section>
     </div>
   )
 }
@@ -206,8 +252,7 @@ export function couponMainRender({data, datatwo, datathree}) {
     // console.log('data', data)
     return (
         <div>
-        <section className="">
-            <CardMain>
+        <section className="px-[20px]">
             <SheetMain>
             <article className="flex flex-row justify-between">
                 <CardMain>
@@ -254,8 +299,8 @@ export function couponMainRender({data, datatwo, datathree}) {
                 
             </article>
             </SheetMain>
-            </CardMain>
         </section>
+        <br />
     </div>
   )
 }
@@ -282,43 +327,42 @@ export function couponMainRenderTwo({data, datatwo, datathree, auth}) {
 
         <div className="md:grid md:grid-flow-col">
         <figure className="">
-        <CardMain>
+            <CardMain>
+                <SheetMain>
+                <section className="grid grid-flow-row justify-items-center">
+                    <CardMain>
+                    <figure className="h-[200px] w-[200px] flex justify-center items-center">
+                    <motion.img   initial={{opacity: 0}} animate={{opacity: 1}}  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://opengem.net/coupon/couponindex/${data?.couponid}`} className="absolute z-10  duration-100" alt="" />
+                    <SpinMain />
+                    </figure>
+                    </CardMain>
+                </section>
+                </SheetMain>
+            </CardMain>
+        </figure>
+        <figcaption className="">
+            <CardMain>
             <SheetMain>
-            <section className="grid grid-flow-row justify-items-center">
+            <section className="text-center">
                 <CardMain>
-                <figure className="h-[200px] w-[200px] flex justify-center items-center">
-                <motion.img   initial={{opacity: 0}} animate={{opacity: 1}}  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://opengem.net/coupon/couponindex/${data?.couponid}`} className="absolute z-10  duration-100" alt="" />
-                <SpinMain />
-                </figure>
+                <p className="text-3xl">{data?.coupontitle}</p>
                 </CardMain>
             </section>
             </SheetMain>
-        </CardMain>
-        </figure>
-        <figcaption className="">
-        <CardMain>
-        <SheetMain>
-        <section className="text-center">
-            <CardMain>
-            <p className="text-3xl">{data?.coupontitle}</p>
             </CardMain>
-        </section>
-        </SheetMain>
-        </CardMain>
-        <section className="w-full fixed bottom-0 left-0 md:relative">
-        {auth ? (<>
-            <StaMain 
-                stamaindata={datatwo && datatwo} 
-                stamainstatic={{stamainid: `claimsframe`, stamainindex: 0}} />
-        </>) : (<>
-            <StaMain 
-                stamaindata={datatwo && datatwo} 
-                stamainstatic={{stamainid: `couponsframe`, stamainindex: 0}} />
-        </>)}
-        </section>
+            <section className="z-20 w-full fixed bottom-0 left-0 md:relative">
+            {auth ? (<>
+                <StaMain 
+                    stamaindata={datatwo && datatwo} 
+                    stamainstatic={{stamainid: `claimsframe`, stamainindex: 0}} />
+            </>) : (<>
+                <StaMain 
+                    stamaindata={datatwo && datatwo} 
+                    stamainstatic={{stamainid: `couponsframe`, stamainindex: 0}} />
+            </>)}
+            </section>
         </figcaption>
         </div>
-
         </div>
         </>))}
     </div>
@@ -341,12 +385,30 @@ export function claimMainRender({data}) {
     // console.log('datadd', data)
     // console.log('datatwo', datatwo)
     return (
-        <div>
-        <section className="">
+        <div className="px-[20px]">
+        <SheetMain>
+        <section className="flex flex-row items-center justify-between">
         <CardMain>
-        ccc        
+            <ChipMain>
+            <figure className={couponMainAction(data?.claimboolean || data?.checkboolean)}>
+        <CardMain>
+        <p className="m-h3  uppercase">{data?.claimboolean && `claimed`}</p>
+        <p className="m-h3  uppercase">{data?.checkboolean && `donated`}</p>
+        </CardMain>
+            </figure>
+            </ChipMain>
+        </CardMain>
+        <CardMain>
+            <figcaption className="text-right">
+                <Link to={`/coupon/couponindex/${data?.couponid?.couponid}`}>
+        <p className="m-h5  first-letter:uppercase">{data?.couponid?.coupontitle}</p>
+                </Link>
+        <p className="l-h3">{data?.created_at?.slice(0, 10)}</p>
+            </figcaption>
         </CardMain>
         </section>
+            </SheetMain>
+            <br />
     </div>
   )
 }
@@ -373,14 +435,14 @@ export function claimMainRenderFour({data, datatwo, href}) {
                 <StaMain 
                     stamaindata={datatwo && datatwo} 
                     stamainstatic={{stamainid: `checksframe`, stamainindex: 0}} />
-                <FieldMain 
-                    fieldmainstatic={{fieldmainid: `couponform`, fieldmainindex: 1}} 
-                    fieldmainstyle={{section: `!bg-red-700`}} />
                 <CardMain>
                 <Link to={`/coupon/couponform/${href}`}>
                 <button className="w-full  m-button">📝 Edit coupon</button>
                 </Link>
                 </CardMain>
+                <FieldMain 
+                    fieldmainstatic={{fieldmainid: `couponform`, fieldmainindex: 1}} 
+                    fieldmainstyle={{button: `!bg-red-700`}} />
             </section>
     </div>
   )
@@ -394,7 +456,7 @@ export function filterMainRender({data}) {
             <SheetMain>
             <CardMain>
             <article className="flex items-center justify-between">
-                <p className="m-h5 uppercase">{data?.contenttitle}</p>
+                <p className="m-h3 uppercase">{data?.contenttitle}</p>
                 <PtaMain 
                 ptamaindata={data}
                 ptamainstatic={{ptamainid: `filterpframe`}} />
@@ -406,6 +468,28 @@ export function filterMainRender({data}) {
     </div>
   )
 }
+
+export function sortMainRender({data}) {
+  return (
+    <div>
+        <section className="">
+            <CardMain>
+            <SheetMain>
+            <CardMain>
+            <article className="flex items-center justify-between">
+                <p className="m-h3 uppercase">{data?.contenttitle}</p>
+                <RtaMain 
+                rtamaindata={data}
+                rtamainstatic={{rtamainid: `sortrframe`}} />
+            </article>
+            </CardMain>
+            </SheetMain>
+            </CardMain>
+        </section>
+    </div>
+  )
+}
+
 
 
 export function couponMainAction(first) {

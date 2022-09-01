@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
+import '../tab/index.css'
 import { Context } from "../../context/Context";
 import useSlice from "../../hook/useSplit";
 import useApp from "../../hook/useApp";

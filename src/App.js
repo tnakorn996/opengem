@@ -19,9 +19,11 @@ import BackdropMain from './layout/backdrop/BackdropMain';
 import ClaimStatus from './page/claim/ClaimStatus';
 import ClaimMain from './page/claim/ClaimMain';
 import CouponStatus from './page/coupon/CouponStatus';
+import { motion } from 'framer-motion';
 
 export default function App() {
   const {
+    appstate,
 
     auth,
 
@@ -32,7 +34,7 @@ export default function App() {
       <div className="App">
         <BackdropMain>
         <GraphMain />
-        <main className="">
+        <motion.main className={`duration-200 scale-100 ${appstate && `!scale-95`}`}>
 
         {auth 
         && <section className="z-20 sticky h-[10vh] top-0 right-0">
@@ -44,7 +46,7 @@ export default function App() {
         </section> */}
         
         
-        <section className="min-h-screen">
+        <section className="min-h-[90vh]">
         <Routes>
           <Route path='/auth/authmain' element={<AuthMain />} /> 
           <Route path='/auth/authform' element={<AuthForm />} /> 
@@ -67,7 +69,7 @@ export default function App() {
         {auth && <section className="sticky bottom-0 right-0">
           <NavMain />
         </section>}
-        </main>
+        </motion.main>
         </BackdropMain>
       </div>
 

@@ -1,4 +1,4 @@
-import { RiTicket2Line, RiTicketLine } from "react-icons/ri"
+import { RiTicket2Line, RiTicketLine, RiTimer2Line } from "react-icons/ri"
 
 export const appul = [
     // {
@@ -27,11 +27,12 @@ export const appul = [
     //     contenttitle: `Create coupo`,
     //     contentaction: `/coupon/couponform/`,
     // },
-    // {
-    //     contentid: `claimain`,
-    //     contenttitle: `Status`,
-    //     contentaction: `/claim/claimmain/`,
-    // },
+    {
+        contentid: `claimain`,
+        contenttitle: `Activity`,
+        contenticon: <RiTimer2Line />,
+        contentaction: `/claim/claimmain/`,
+    },
 ]
 
 export const settingul = [
@@ -60,7 +61,7 @@ export const settingmainul = [
 export const claimul = [
     {
         contentid: `claim`,
-        contenttitle: `Claim`,
+        contenttitle: `Claimed`,
     },
     // {
     //     contentid: `unclaim`,
@@ -72,11 +73,23 @@ export const claimul = [
 export const checkul = [
     {
         contentid: `paid`,
-        contenttitle: `Paid`,
+        contenttitle: `Donated`,
     },
     // {
     //     contentid: `unpaid`,
     //     contenttitle: `Un-Paid`,
     // },
- 
+]
+
+export const sortul = [
+    {
+        contentid: `new`,
+        contenttitle: `Recently created`,
+        contentbool: false,
+    },
+    {
+        contentid: `old`,
+        contenttitle: `Oldest`,
+        contentbool: true,
+    },
 ]

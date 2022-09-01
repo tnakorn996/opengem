@@ -30,6 +30,11 @@ export default function NavMain({
                 navmainid: `apptbody`,
                 navmainindex: 1,
             })
+        } else {
+             return setnavmainstate({
+                navmainid: `apptbody`,
+                navmainindex: 1,
+            })
         }
     }, [location])
     
@@ -79,7 +84,7 @@ export function appTbodyRender({data}) {
                 <div className="absolute right-0 bottom-0">
                 <CardMain>
                     <Link to={`/coupon/couponform`}>
-                    <figure className="w-[70px] h-[70px] text-center  rounded-full l-button ">
+                    <figure className="w-[70px] h-[70px] text-center  rounded-full m-button border-none shadow-2xl">
                         <p className="m-h6">+</p>
                     </figure>
                     </Link>

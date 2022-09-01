@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
+import { motion } from 'framer-motion'
 
 import {supabase} from '../../lib/supabase'
 import { Context } from '../../context/Context'
@@ -502,7 +503,7 @@ export default function FieldMain({
     <div>
         <main className="">
                 {appstatic?.map((data, index) => (<>
-            <section key={index} className="">
+            <motion.section key={index}  initial={{opacity: 0}} animate={{opacity: 1}}  className="duration-100">
 
                     {data?.fieldmaintitle && 
                      <CardMain>
@@ -521,10 +522,10 @@ export default function FieldMain({
                     <CardMain>
                         <button onClick={() => {
                             data?.fieldmainaction()
-                        }} className={`w-full  l-button ${fieldmainstyle?.section}`}>{data?.fieldmainentitle}</button>
+                        }} className={`w-full  l-button ${fieldmainstyle?.button}`}>{data?.fieldmainentitle}</button>
                     </CardMain>
 
-            </section>
+            </motion.section>
                 </>))}
         </main>
     </div>

@@ -56,12 +56,12 @@ export default function StaMain({
     const claimsframe = [
         {
             stamainrender: () => {
-                return <FieldMain fieldmainstatic={{fieldmainid: 'claimform', fieldmainindex: 0}} />
+                return <FieldMain fieldmainstatic={{fieldmainid: 'claimform', fieldmainindex: 0}} fieldmainstyle={{button: `!bg-white !text-black`}} />
             }
         },
         {
             stamainrender: () => {
-                return <FieldMain fieldmainstatic={{fieldmainid: 'claimform', fieldmainindex: 1}} fieldmainstyle={{button: `!l-button`}} />
+                return <FieldMain fieldmainstatic={{fieldmainid: 'claimform', fieldmainindex: 1}}  />
             }
         },
     ]
@@ -69,12 +69,12 @@ export default function StaMain({
     const checksframe = [
         {
             stamainrender: () => {
-                return <FieldMain fieldmainstatic={{fieldmainid: 'checkform', fieldmainindex: 0}} />
+                return <FieldMain fieldmainstatic={{fieldmainid: 'checkform', fieldmainindex: 0}} fieldmainstyle={{button: `!bg-white !text-black`}} />
             }
         },
         {
             stamainrender: () => {
-                return <FieldMain fieldmainstatic={{fieldmainid: 'checkform', fieldmainindex: 1}} fieldmainstyle={{button: `!l-button`}} />
+                return <FieldMain fieldmainstatic={{fieldmainid: 'checkform', fieldmainindex: 1}}  />
             }
         },
     ]

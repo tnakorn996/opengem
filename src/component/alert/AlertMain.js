@@ -101,7 +101,7 @@ export default function AlertMain({
       alertmainrender: () => {
         if(alertmaindata.length > 0) {
           return appCaptionRender({
-            data: alertMainAction({
+            data: alertMainActionTwo({
                 alertmainstatus: `error`,
                 alertmaintitle: `This voulcher is unavaible for use`,
                 alertmaindata: [{alertmainsubtitle: `The customer has yet already used their voucher.`}] 
@@ -110,7 +110,7 @@ export default function AlertMain({
         } 
         if(alertmaindata.length === 0) {
            return appCaptionRender({
-            data: alertMainAction({
+            data: alertMainActionTwo({
                 alertmainstatus: `success`,
                 alertmaintitle: `This voulcher is avaible for use`,
                 alertmaindata: [{alertmainsubtitle: `The customer has't yet used their voucher.`}] 
@@ -171,18 +171,18 @@ export function appCaptionRender({data}) {
       <ChipMain>
       <section className={data.style}>
           <div className="flex flex-row items-center">
-          {/* <CardMain >
+          <CardMain >
           <figure className="">
             <p className="text-2xl">{data.icon}</p>
           </figure>
-          </CardMain> */}
+          </CardMain>
           <figcaption className="">
-            <CardMain>
+            {/* <CardMain> */}
             <h1 className="m-h4">{data?.data.alertmaintitle}</h1>
             {/* {data.data.alertmaindata?.map(data => (<>
             <p className="font-light">{data.alertmainsubtitle}</p>
             </>))} */}
-            </CardMain>
+            {/* </CardMain> */}
           </figcaption>
           </div>
       </section>

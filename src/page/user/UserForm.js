@@ -7,10 +7,13 @@ export default function UserForm() {
     <div>
         <main className="">
             <section className="">
-                <FieldMain fieldmainstatic={{
+                <FieldMain 
+                fieldmainstatic={{
                     fieldmainid: `authform`,
                     fieldmainindex: 2,
-                }} />
+                }}
+                fieldmainstyle={{button: `!bg-red-700`}}
+                />
             </section>
         </main>
     </div>

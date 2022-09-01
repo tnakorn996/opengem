@@ -3,11 +3,12 @@ import { Link, useLocation } from 'react-router-dom'
 import {RiMenu2Line} from 'react-icons/ri'
 
 import { appul } from '../../content/content'
+import { Context } from '../../context/Context'
 import useApp from '../../hook/useApp'
 import CardMain from '../../layout/card/CardMain'
-import PostMain from '../post/PostMain'
-import { Context } from '../../context/Context'
 import ThemeMain from '../../layout/theme/ThemeMain'
+import PostMain from '../post/PostMain'
+import DtaMain from '../dta/DtaMain'
 
 export default function BarMain({
 
@@ -102,7 +103,11 @@ export function appTfootRender({data, datatwo}) {
     <div>
         <section className="flex flex-row items-center justify-between">
         <CardMain>
+            <DtaMain
+            dtamaindata={{dtamainhref: `/app/appmain`}} 
+            dtamainstatic={{dtamainid: `appdframe`, dtamainindex: 0}} >
             <RiMenu2Line />
+            </DtaMain>
         </CardMain>
         <CardMain>
             {data}

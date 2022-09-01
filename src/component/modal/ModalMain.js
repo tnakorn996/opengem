@@ -5,11 +5,13 @@ import { Context } from '../../context/Context'
 import useApp from '../../hook/useApp'
 import CardMain from '../../layout/card/CardMain'
 import ChipMain from '../../layout/chip/ChipMain'
+import AppMain from '../../page/app/AppMain'
 // import ThemeMain from '../../layout/theme/ThemeMain'
 // import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
 import ClaimForm from '../../page/claim/ClaimForm'
 import ClaimStatus from '../../page/claim/ClaimStatus'
 import FilterMain from '../../page/filter/FilterMain'
+import SortMain from '../../page/sort/SortMain'
 
 export default function ModalMain() {
     const { 
@@ -17,6 +19,14 @@ export default function ModalMain() {
     
     } = useContext(Context)
     const location = useLocation()
+
+    const appdialog = [
+        {
+            modalmainrender: () => {
+                return <AppMain />
+            }
+        },
+    ]
 
     const claimdialog = [
         {
@@ -39,7 +49,19 @@ export default function ModalMain() {
         },
     ]
 
+    const sortdialog = [
+        {
+            modalmainrender: () => {
+                return <SortMain />
+            }
+        },
+    ]
+
     const modalmain = [
+             {
+            modalmainid: `appdialog`,
+            modalmainref: appdialog,
+        },
         {
             modalmainid: `claimdialog`,
             modalmainref: claimdialog,
@@ -47,6 +69,10 @@ export default function ModalMain() {
         {
             modalmainid: `filterdialog`,
             modalmainref: filterdialog,
+        },
+                {
+            modalmainid: `sortdialog`,
+            modalmainref: sortdialog,
         },
     ]
 

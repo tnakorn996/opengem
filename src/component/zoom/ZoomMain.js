@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { RiSearchLine } from 'react-icons/ri'
+import { RiArrowUpDownLine, RiFilter3Line, RiSearchLine } from 'react-icons/ri'
 import { settingul, workoutul } from '../../content/content'
 import { Context } from '../../context/Context'
 
@@ -28,6 +28,9 @@ export default function ZoomMain({
     } = useContext(Context)
     const [splitstaticthree, setsplitstaticthree] = useSplit(3)
 
+    const parsefilter = JSON.parse(window.localStorage.getItem("opengem-filterpframe"));
+    const concat = (Array.isArray(claimdl[0].contextdata) && Array.isArray(checkdl[0].contextdata)) && claimdl[0].contextdata.concat(checkdl[0].contextdata)
+
     useEffect(() => {
         if(zoommainvalue === ''){setzoommainindex(0)}
         if(zoommainvalue !== ''){setzoommainindex(1)}
@@ -39,46 +42,44 @@ export default function ZoomMain({
                 {
                     zoommaintitle: 'My coupons',
                     zoommainrender: () => {
-                        // if(!Array.isArray(claimdl[0].contextdata)) return null
+                        if(!Array.isArray(claimdl[0].contextdata)
+                        || !Array.isArray(checkdl[0].contextdata)) return null
                         const empty = []
-                        const parsefilter = JSON.parse(window.localStorage.getItem("opengem-filterpframe"));
                         const array = coupondl[0].contextdata
                             for(const data of array){
                                 claimdl[0].contextdata.forEach(dat => {
                                     if(data.couponid === dat.couponid.couponid){
                                         Object.assign(data, {claimboolean: `claim`})
-                                    }
+                                    } 
                                 })
                                 checkdl[0].contextdata.forEach(dat => {
                                     if(data.couponid === dat.couponid.couponid){
                                         Object.assign(data, {checkboolean: `paid`})
-                                    }
+                                    } 
                                 })
                             }
 
                             // console.log('arrays', array)
-                            // console.log('parsefilter', parsefilter)
                             array.forEach(data => {
                                 if(parsefilter.length === 0){
                                     empty.push(data)
                                 }
-                                if(parsefilter.some(dat => dat['contentid'] === data.claimboolean)
+                                if(parsefilter.length !== 0 
+                                && parsefilter.some(dat => dat['contentid'] === data.claimboolean)
                                 && parsefilter.some(dat => dat['contentid'] === data.checkboolean)){
                                     empty.push(data)
-                                    console.log('first')
                                 }
                                 if(parsefilter.length !== 0 
-                                    && parsefilter.every(dat => dat['contentid'] === data.claimboolean)){
+                                && parsefilter.every(dat => dat['contentid'] === data.claimboolean)){
                                     empty.push(data)
-                                    console.log('sec')
                                 }
                                 if(parsefilter.length !== 0 
-                                    && parsefilter.every(dat => dat['contentid'] === data.checkboolean )){
+                                && parsefilter.every(dat => dat['contentid'] === data.checkboolean )){
                                     empty.push(data)
-                                    console.log('th')
                                 }
                                 
                             })
+                            // console.log('empty', empty)
                             return appInputRender({
                                 data: empty,
                                 postmainstatic: {postmainid: `couponaddress`, postmainindex: 0},
@@ -102,10 +103,73 @@ export default function ZoomMain({
         },
     ]
 
+    const claiminput = [
+        {
+            zoommaindata: [
+                {
+                    zoommaintitle: 'My activity',
+                    zoommainrender: () => {
+                        const empty = []
+                        const parsesort = JSON.parse(window.localStorage.getItem("opengem-sortrframe"));
+                            concat.forEach(data => {
+                                if(data.claimid){
+                                    Object.assign(data, {claimboolean: `claim`})
+                                } 
+                                if(data.checkid){
+                                    Object.assign(data, {checkboolean: `paid`})
+                                } 
+                            })
+
+                            concat.forEach(data => {
+                                if(parsefilter.length === 0){
+                                    empty.push(data)
+                                }
+                                if(parsefilter.length !== 0 
+                                && parsefilter.every(dat => dat['contentid'] === data.claimboolean)){
+                                    empty.push(data)
+                                }
+                                if(parsefilter.length !== 0 
+                                && parsefilter.every(dat => dat['contentid'] === data.checkboolean )){
+                                    empty.push(data)
+                                }
+                                
+                            })
+                            // console.log('empty', empty)
+                            return appInputRender({
+                                data: empty.sort((a, b) => 
+                                     Object.assign(...parsesort).contentbool 
+                                    ? a.created_at.localeCompare(b.created_at) 
+                                    : b.created_at.localeCompare(a.created_at)),
+                                postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
+                            })
+                    },
+                },
+            ]
+        },
+        {
+            zoommaindata: [
+                {
+                    zoommaintitle: 'Activity results',
+                    zoommainrender: () => {
+                    
+                        return appInputRender({
+                            data: concat.filter(data => data?.couponid?.couponid?.toString()?.toLowerCase().includes(zoommainvalue) || data.couponid?.coupontitle?.toString()?.toLowerCase().includes(zoommainvalue)),
+                            postmainstatic: {postmainid: `claimaddress`, postmainindex: 0},
+                        })
+                    },
+                },
+            ]
+        },
+    ]
+
     const zoommain = [
         {
             zoommainid: 'couponinput',
             zoommainref: couponinput,
+        },
+          {
+            zoommainid: 'claiminput',
+            zoommainref: claiminput,
         },
     ]
 
@@ -130,14 +194,14 @@ export default function ZoomMain({
                 </CardMain>
             </section>
 
-            {/* <CardMain> */}
-            <section className="px-[20px] grid grid-cols-2 gap-2">
+            <section className="px-[20px] grid grid-cols-2 gap-5">
                 <DtaMain dtamaindata={{dtamainhref: `/filter/filtermain`}} dtamainstatic={{dtamainid: `filterdframe`, dtamainindex: 0}} >
-                <button className="w-full  l-button">Filters</button>
+                <button className="w-full flex items-center justify-center gap-1  l-button"><RiFilter3Line /> Filters {parsefilter?.length > 0 && parsefilter?.length}</button>
                 </DtaMain>
-                <button className="w-full  l-button">Sort</button>
+                <DtaMain dtamaindata={{dtamainhref: `/sort/sortmain`}} dtamainstatic={{dtamainid: `sortdframe`, dtamainindex: 0}} >
+                <button className="w-full flex items-center justify-center gap-1  l-button"> <RiArrowUpDownLine /> Sort</button>
+                </DtaMain>
             </section>
-            {/* </CardMain> */}
 
             <section className="">
             {appstatic?.map((data) => (

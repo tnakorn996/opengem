@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
-import { checkul, claimul } from '../../content/content'
+import { appul, checkul, claimul, sortul } from '../../content/content'
 import { Context } from '../../context/Context'
 import useApp from '../../hook/useApp'
 import CardMain from '../../layout/card/CardMain'
@@ -16,6 +16,17 @@ export default function FeedMain({
         messagedl,
 
     } = useContext(Context)
+
+    const apparea = [
+        {
+            feedmainrender: () => { 
+                return appul?.map((data, index) => (<>
+                <PostMain key={index} postmaindata={data} postmainstatic={{postmainid: `appaddress`, postmainindex: 0}} />
+                </>)) 
+            }
+        },
+    ]
+
 
     const couponarea = [
         {
@@ -48,8 +59,22 @@ export default function FeedMain({
         },
     ]
 
+    const sortarea = [
+        {
+            feedmainrender: () => { 
+                return sortul?.map((data, index) => (<>
+                <PostMain key={index} postmaindata={data} postmainstatic={{postmainid: `sortaddress`, postmainindex: 0}} />
+                </>)) 
+            }
+        },
+    ]
+
 
     const feedmain = [
+              {
+            feedmainid: `apparea`,
+            feedmainref: apparea,
+        },
         {
             feedmainid: `couponarea`,
             feedmainref: couponarea,
@@ -57,6 +82,10 @@ export default function FeedMain({
                 {
             feedmainid: `filterarea`,
             feedmainref: filterarea,
+        },
+                        {
+            feedmainid: `sortarea`,
+            feedmainref: sortarea,
         },
     ]
 

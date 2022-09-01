@@ -31,6 +31,19 @@ export default function AtaMain({
             return null
     }
 
+    const appdframe = [
+        {
+            dtamainrender: () => {
+                return {
+                    appid: 'backdropmain',
+                    appidtwo: 'modalmain',
+                    appidthree: 'appdialog',
+                    appindex: 0,
+                }
+            } 
+        },
+    ]
+
     const claimdframe = [
         {
             dtamainrender: () => {
@@ -67,7 +80,24 @@ export default function AtaMain({
         },
     ]
 
+    const sortdframe = [
+        {
+            dtamainrender: () => {
+                return {
+                    appid: 'backdropmain',
+                    appidtwo: 'modalmain',
+                    appidthree: 'sortdialog',
+                    appindex: 0,
+                }
+            } 
+        },
+    ]
+
     const dtamain = [
+               {
+            dtamainid: 'appdframe',
+            dtamainref: appdframe
+        },
         {
             dtamainid: 'claimdframe',
             dtamainref: claimdframe
@@ -75,6 +105,10 @@ export default function AtaMain({
         {
             dtamainid: 'filterdframe',
             dtamainref: filterdframe
+        },
+                {
+            dtamainid: 'sortdframe',
+            dtamainref: sortdframe
         },
     ]
 
