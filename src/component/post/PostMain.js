@@ -312,6 +312,9 @@ export function couponMainRenderTwo({data, datatwo, datathree, auth}) {
         <div>
         {data?.map((data, index) => (<>
         <div key={index} className="">
+        <CardMain>
+        <ChipMain>
+        <ThemeMainTwo>
         <section className="">
             <AlertMain 
                 alertmaindata={datatwo} 
@@ -324,15 +327,13 @@ export function couponMainRenderTwo({data, datatwo, datathree, auth}) {
                 </CardMain>
             </article> */}
         </section>
-
-        <div className="md:grid md:grid-flow-col">
         <figure className="">
             <CardMain>
                 <SheetMain>
                 <section className="grid grid-flow-row justify-items-center">
                     <CardMain>
                     <figure className="h-[200px] w-[200px] flex justify-center items-center">
-                    <motion.img   initial={{opacity: 0}} animate={{opacity: 1}}  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://opengem.net/coupon/couponindex/${data?.couponid}`} className="absolute z-10  duration-100" alt="" />
+                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://opengem.net/coupon/couponindex/${data?.couponid}`} className="absolute z-10" alt="" />
                     <SpinMain />
                     </figure>
                     </CardMain>
@@ -340,6 +341,10 @@ export function couponMainRenderTwo({data, datatwo, datathree, auth}) {
                 </SheetMain>
             </CardMain>
         </figure>
+        </ThemeMainTwo>
+        </ChipMain>
+        </CardMain>
+
         <figcaption className="">
             <CardMain>
             <SheetMain>
@@ -362,7 +367,7 @@ export function couponMainRenderTwo({data, datatwo, datathree, auth}) {
             </>)}
             </section>
         </figcaption>
-        </div>
+ 
         </div>
         </>))}
     </div>

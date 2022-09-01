@@ -7,9 +7,9 @@ export default function SpinMain() {
   return (
     <div>
         <main className="">
-            <section className="animate-ping">
-                {/* <div className="w-[50px] h-[50px]  border dark:border-slate-700 dark:border-r-slate-300 animate-spin rounded-full" /> */}
-                <RiLoader2Line className="text-3xl animate-spin" />
+            <section className="">
+                <div className="w-[90px] h-[90px]  border-2 dark:border-slate-800 dark:border-r-slate-300 animate-spin rounded-full" />
+                {/* <RiLoader2Line className="text-3xl animate-spin" /> */}
             </section>
         </main>
     </div>

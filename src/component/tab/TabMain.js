@@ -92,6 +92,7 @@ export default function TabMain({
           <figcaption className="flex flex-row items-center">
             {tabmainrender?.map((data, index) => (<>
                 <article
+                  key={index}
                   onClick={() => {
                     settabmainstate({ tabmainindex: index });
                   }}

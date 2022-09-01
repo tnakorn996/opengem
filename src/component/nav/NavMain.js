@@ -43,7 +43,8 @@ export default function NavMain({
             navmainrender: () => {
                 const filter = appul.filter(data => data.contentid.includes(`main`))
                 return appTbodyRender({
-                    data: filter
+                    data: filter,
+                    location: location,
                 })
             }
         },
@@ -76,7 +77,7 @@ export default function NavMain({
   )
 }
 
-export function appTbodyRender({data}) {
+export function appTbodyRender({data, location}) {
   return (
     <ThemeMain>
         <div className="dark:border dark:border-slate-700">
