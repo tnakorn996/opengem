@@ -22,11 +22,11 @@ export const appul = [
         contenticon: <RiTicket2Line />,
         contentaction: `/coupon/couponmain/`,
     },
-    // {
-    //     contentid: `couponform`,
-    //     contenttitle: `Create coupo`,
-    //     contentaction: `/coupon/couponform/`,
-    // },
+    {
+        contentid: `couponform`,
+        contenttitle: `Create coupon`,
+        contentaction: `/coupon/couponform/`,
+    },
     {
         contentid: `claimain`,
         contenttitle: `Activity`,
@@ -58,16 +58,19 @@ export const settingmainul = [
 ]
 
 
+export const couponul = [
+    {
+        contentid: `coupon`,
+        contenttitle: `Let begin with your first coupon`,
+        contentaction: `/coupon/couponform/`,
+    }
+]
+
 export const claimul = [
     {
         contentid: `claim`,
         contenttitle: `Claimed`,
     },
-    // {
-    //     contentid: `unclaim`,
-    //     contenttitle: `Un-claim`,
-    // },
- 
 ]
 
 export const checkul = [
@@ -75,10 +78,6 @@ export const checkul = [
         contentid: `paid`,
         contenttitle: `Donated`,
     },
-    // {
-    //     contentid: `unpaid`,
-    //     contenttitle: `Un-Paid`,
-    // },
 ]
 
 export const sortul = [

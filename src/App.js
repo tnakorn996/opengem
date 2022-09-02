@@ -33,7 +33,7 @@ export default function App() {
   return (
       <div className="App">
         <BackdropMain>
-        <GraphMain />
+        <GraphMain graphmainstatic={{graphmainid: `guidebase`, graphmainindex: 0}} />
         <motion.main className={`duration-200 scale-100 ${appstate && `!scale-95`}`}>
 
         {auth 

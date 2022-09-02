@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import React, { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -6,11 +7,12 @@ import useApp from '../../hook/useApp'
 import CardMain from '../../layout/card/CardMain'
 import ChipMain from '../../layout/chip/ChipMain'
 import AppMain from '../../page/app/AppMain'
-// import ThemeMain from '../../layout/theme/ThemeMain'
-// import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
+import ThemeMain from '../../layout/theme/ThemeMain'
+import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
 import ClaimForm from '../../page/claim/ClaimForm'
 import ClaimStatus from '../../page/claim/ClaimStatus'
 import FilterMain from '../../page/filter/FilterMain'
+import GuideIndex from '../../page/guide/GuideIndex'
 import SortMain from '../../page/sort/SortMain'
 
 export default function ModalMain() {
@@ -57,6 +59,14 @@ export default function ModalMain() {
         },
     ]
 
+    const guidedialog = [
+        {
+            modalmainrender: () => {
+                return <GuideIndex />
+            }
+        },
+    ]
+
     const modalmain = [
              {
             modalmainid: `appdialog`,
@@ -73,6 +83,10 @@ export default function ModalMain() {
                 {
             modalmainid: `sortdialog`,
             modalmainref: sortdialog,
+        },
+           {
+            modalmainid: `guidedialog`,
+            modalmainref: guidedialog,
         },
     ]
 
@@ -92,11 +106,9 @@ export default function ModalMain() {
                 }} className="w-full flex justify-center">
                 <CardMain>
                 <ChipMain>
-                {/* <ThemeMainTwo> */}
-                <CardMain>
-                <button className="w-[30px] h-[30px]  m-h6">╳</button>
-                </CardMain>
-                {/* </ThemeMainTwo> */}
+                <ThemeMainTwo>
+                <button className="w-[60px] h-[60px] flex items-center justify-center  m-h6 bg-slate-700">╳</button>
+                </ThemeMainTwo>
                 </ChipMain>
                 </CardMain>
             </section>

@@ -19,7 +19,7 @@ export default function AuthMain() {
             <section className="">
               {auth ? (<>
               <CardMain>
-                  <p className="m-h6">Welcome! {auth?.user?.email?.split(`@`)[0]}</p>
+                  <p className="m-h6">Welcome! <span className="uppercase"> {auth?.user?.email?.split(`@`)[0]}</span></p>
               </CardMain>
               </>) :  (<>
                 <TabMain tabmainstatic={{tabmainid: `authfieldset`, tabmainindex: 0}} />

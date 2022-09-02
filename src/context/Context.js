@@ -1,6 +1,7 @@
 
 import React, { createContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { couponul } from '../content/content';
 
 import { supabase } from '../lib/supabase';
 
@@ -115,27 +116,39 @@ export const Provider = ({
         },
     ]
 
-    // const guidedl = [
-    //     {
-    //         spreadid: 'activity',
-    //         spreadtitle: 'My activity',
-    //         spreadicon: `💬`,
-    //         spreaddata: () => {
-    //             if(typeof useruserid === 'undefined') return null
-    //             return userul.map(data => (
-    //                 {
-    //                     spreadidtwo: data.breadid,
-    //                     spreadhref: `/guide/guideindex/` + data.breadid,
-    //                     spreaddetail: `${data.breadtitle}`,
-    //                     spreadrender: () => {
-    //                         const ref = useruserid[0][data.breadid] === null
-    //                         return contextRenderFive(ref, data.breadid, data.breadaction)
-    //                     }
-    //                 }
-    //             ))
-    //         }
-    //     },
-    // ]
+    // function contextAction(second, result) {
+    //     if(questuserid && questuserid.filter(data => data?.spreadidtwo === second).length === 0) {
+    //         return Object.assign({booltwo: true}, result)
+    //     } 
+    //     return Object.assign({booltwo: false}, result)
+    // }
+
+    function contextAction(first, second, navigate) {
+        if(first) {return  {navigate: navigate, bool: true}}  
+        return  {navigate: navigate, bool: false} 
+    }
+
+    const guidedl = [
+        {
+            contextid: 'coupon',
+            contexttitle: 'First coupon',
+            contexticon: `📝`,
+            contextdata: () => {
+                if(typeof couponuserid === 'undefined') return null
+                return couponul.map(data => (
+                    {
+                        contextidtwo: data.contentid,
+                        contexthref: `/guide/guideindex/` + data.contentid,
+                        contextdetail: `${data.contenttitle}`,
+                        contextrender: () => {
+                            const ref = couponuserid?.length === 0;
+                            return contextAction(ref, data.contentid, data.contentaction)
+                        }
+                    }
+                ))
+            }
+        },
+    ]
 
     return (
         <Context.Provider value={{
@@ -152,6 +165,7 @@ export const Provider = ({
         claimdl,
         checkdl,
         messagedl,
+        guidedl,
         
         }} >
         {children}

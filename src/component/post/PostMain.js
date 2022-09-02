@@ -28,12 +28,14 @@ export default function PostMain({
 }) {
 
     const {
+        appstate,
         fieldmainstate,
 
         auth,
         claimdl,
         checkdl,
         messagedl,
+        guidedl,
 
     } = useContext(Context)
     const [splitstaticthree, setsplitstaticthree] = useSplit(3)
@@ -163,6 +165,21 @@ export default function PostMain({
         },
     ]
 
+    const guideaddress = [
+        {
+
+        },
+        {
+            postmainrender: () => {
+                const filter = guidedl[0].contextdata().filter(data => data.contextidtwo === splitstaticthree)
+                // const assign =  Object.assign(Object.assign(guidedl[0]), )
+                return guideMainRenderTwo({
+                    data: filter
+                })
+            }
+        },
+    ]
+
     const postmain = [
               {
             postmainid: `appaddress`,
@@ -188,10 +205,19 @@ export default function PostMain({
             postmainid: `sortaddress`,
             postmainref: sortaddress,
         },
+                        {
+            postmainid: `guideaddress`,
+            postmainref: guideaddress,
+        },
     ]
 
     const [appstatic, setappstatic] = useApp(postmain, postmainstatic.postmainid, postmainstatic.postmainindex, 
-        postmainstatic, postmaindata, fieldmainstate, messagedl)
+        postmainstatic, 
+        fieldmainstate, 
+        splitstaticthree,
+
+        postmaindata, 
+        messagedl,)
 // console.log('appstatic', appstatic)
   return (
     <div>
@@ -491,6 +517,25 @@ export function sortMainRender({data}) {
             </SheetMain>
             </CardMain>
         </section>
+    </div>
+  )
+}
+
+export function guideMainRenderTwo({data}) {
+  return (
+    <div>
+        {data?.map(data => (<>
+        <section className="">
+            <CardMain>
+            <p className="m-h6">{data.contextdetail}</p>
+            </CardMain>
+            <Link to={data.contextrender().navigate}>
+                <CardMain>
+                <button className="w-full  m-button">Go to link</button>
+                </CardMain>
+            </Link>
+        </section>
+        </>))}
     </div>
   )
 }
