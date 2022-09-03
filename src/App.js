@@ -3,6 +3,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import { motion } from 'framer-motion';
 import { Context } from './context/Context';
 import BarMain from './component/bar/BarMain';
 // import BreadMain from './component/bread/BreadMain';
@@ -19,7 +20,7 @@ import BackdropMain from './layout/backdrop/BackdropMain';
 import ClaimStatus from './page/claim/ClaimStatus';
 import ClaimMain from './page/claim/ClaimMain';
 import CouponStatus from './page/coupon/CouponStatus';
-import { motion } from 'framer-motion';
+import NotificationMain from './page/notification/NotificationMain';
 
 export default function App() {
   const {
@@ -62,6 +63,8 @@ export default function App() {
           <Route path='/claim/claimmain' element={<ClaimMain />} /> 
           <Route path='/claim/claimform/:id' element={<ClaimForm />} /> 
           <Route path='/claim/claimstatus/:id' element={<ClaimStatus />} /> 
+
+          <Route path='/notification/notificationmain' element={<NotificationMain />} /> 
 
         </Routes> 
         </section>

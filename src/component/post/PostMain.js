@@ -180,6 +180,18 @@ export default function PostMain({
         },
     ]
 
+    const notificationaddress = [
+        {
+            postmainrender: () => {
+                // const filter = guidedl[0].contextdata().filter(data => data.contextidtwo === splitstaticthree)
+                // const assign =  Object.assign(Object.assign(guidedl[0]), )
+                return notificationMainRender({
+                    data: postmaindata
+                })
+            }
+        },
+    ]
+
     const postmain = [
               {
             postmainid: `appaddress`,
@@ -205,9 +217,13 @@ export default function PostMain({
             postmainid: `sortaddress`,
             postmainref: sortaddress,
         },
-                        {
+        {
             postmainid: `guideaddress`,
             postmainref: guideaddress,
+        },
+        {
+            postmainid: `notificationaddress`,
+            postmainref: notificationaddress,
         },
     ]
 
@@ -434,7 +450,8 @@ export function claimMainRender({data}) {
                 <Link to={`/coupon/couponindex/${data?.couponid?.couponid}`}>
         <p className="m-h5  first-letter:uppercase">{data?.couponid?.coupontitle}</p>
                 </Link>
-        <p className="l-h3">{data?.created_at?.slice(0, 10)}</p>
+        {/* <p className="l-h3">{data?.created_at?.slice(0, 10)}</p> */}
+        <p className="l-h4">{couponMainActionTwo(data?.created_at)}</p>
             </figcaption>
         </CardMain>
         </section>
@@ -540,10 +557,68 @@ export function guideMainRenderTwo({data}) {
   )
 }
 
-
+export function notificationMainRender({data}) {
+    // console.log('data', data)
+  return (
+    <div>
+        <section className="">
+            <CardMain>
+            <SheetMain>
+            <CardMain>
+                <Link to={`/coupon/couponindex/${data.contextrender().navigate}`}>
+                <article className="grid grid-flow-col justify-between items-start  m-h4 ">
+            <p className="first-letter:uppercase">{data.contextdetail}</p>
+            <p className="">{couponMainActionTwo(data.contextrender().data.created_at)}</p>
+                </article>
+                </Link>
+            </CardMain>
+            </SheetMain>
+            </CardMain>
+        </section>
+    </div>
+  )
+}
 
 export function couponMainAction(first) {
     if(typeof first === 'undefined') return `!bg-slate-700`
     if(typeof first !== 'undefined') return `!bg-green-700`
   return 
 }
+
+
+export function couponMainActionTwo(date) {
+  if(typeof date === "undefined" ) return null;
+//   var aDay = 24*60*60*1000;
+  const ref=   new Date(date);
+// const ref = date.slice(0, 19)
+// const ref = date.toISOString()
+// const ref = date.replace('T', ' ')
+// const ref = date.toLocaleString()
+
+  var seconds = Math.floor((new Date() - ref) / 1000);
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+// var aDay = 24*60*60*1000;
+// console.log(timeSince(new Date(Date.now()-aDay)));
+// console.log(timeSince(new Date(Date.now()-aDay*2)));

@@ -92,7 +92,7 @@ export function appTbodyRender({data, location}) {
                 </CardMain>
                 </div>
             </section>
-            <section className="h-[10vh] flex flex-row justify-center items-center ">
+            <section className="h-[10vh] flex flex-row justify-around items-center ">
             {data?.map((data, index) => (<> 
                 <Link key={index} to={data.contentaction}>
                 <CardMain>

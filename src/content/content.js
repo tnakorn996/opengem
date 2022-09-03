@@ -1,11 +1,12 @@
-import { RiTicket2Line, RiTicketLine, RiTimer2Line } from "react-icons/ri"
+import { RiHomeLine, RiTicket2Line, RiTicketLine, RiTimer2Line } from "react-icons/ri"
 
 export const appul = [
-    // {
-    //     contentid: `authmain`,
-    //     contenttitle: `OPENGEM`,
-    //     contentaction: `/auth/authmain/`,
-    // },
+    {
+        contentid: `authmain`,
+        contenttitle: `Home`,
+        contenticon: <RiHomeLine />,
+        contentaction: `/auth/authmain/`,
+    },
     // {
     //     contentid: `authfrom`,
     //     contenttitle: `Welcome`,
@@ -22,11 +23,11 @@ export const appul = [
         contenticon: <RiTicket2Line />,
         contentaction: `/coupon/couponmain/`,
     },
-    {
-        contentid: `couponform`,
-        contenttitle: `Create coupon`,
-        contentaction: `/coupon/couponform/`,
-    },
+    // {
+    //     contentid: `couponform`,
+    //     contenttitle: `Create coupon`,
+    //     contentaction: `/coupon/couponform/`,
+    // },
     {
         contentid: `claimain`,
         contenttitle: `Activity`,
@@ -63,7 +64,12 @@ export const couponul = [
         contentid: `coupon`,
         contenttitle: `Let begin with your first coupon`,
         contentaction: `/coupon/couponform/`,
-    }
+    },
+        {
+        contentid: `click`,
+        contenttitle: `Let begin with where are update`,
+        contentaction: `/notification/notificationmain/`,
+    },
 ]
 
 export const claimul = [

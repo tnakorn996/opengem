@@ -4,6 +4,7 @@ import { appul, checkul, claimul, sortul } from '../../content/content'
 import { Context } from '../../context/Context'
 import useApp from '../../hook/useApp'
 import CardMain from '../../layout/card/CardMain'
+import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
 import PostMain from '../post/PostMain'
 
 export default function FeedMain({
@@ -14,6 +15,7 @@ export default function FeedMain({
 
         coupondl,
         messagedl,
+        notificationdl,
 
     } = useContext(Context)
 
@@ -69,9 +71,35 @@ export default function FeedMain({
         },
     ]
 
+    const notificationarea = [
+        {
+            feedmaintitle: `New update`,
+            feedmainrender: () => { 
+                if(typeof notificationdl[0]?.contextdata() === 'undefined') return null
+                // console.log(' notificationdl[0]?.contextdata()',  notificationdl[0]?.contextdata())
+                const filter =  notificationdl[0]?.contextdata()?.filter(data => data.contextrender().bool === true)
+                return filter?.map((data, index) => (<>
+                <ThemeMainTwo>
+                <PostMain key={index} postmaindata={data} postmainstatic={{postmainid: `notificationaddress`, postmainindex: 0}} />
+                </ThemeMainTwo>
+                </>)) 
+            }
+        },
+        {
+            feedmaintitle: `All update`,
+            feedmainrender: () => { 
+                if(typeof notificationdl[0]?.contextdata() === 'undefined') return null
+                // console.log(' notificationdl[0]?.contextdata()',  notificationdl[0]?.contextdata())
+                const filter =  notificationdl[0]?.contextdata()?.filter(data => data.contextrender().bool === false)
+                return filter?.map((data, index) => (<>
+                <PostMain key={index} postmaindata={data} postmainstatic={{postmainid: `notificationaddress`, postmainindex: 0}} />
+                </>)) 
+            }
+        },
+    ]
 
     const feedmain = [
-              {
+        {
             feedmainid: `apparea`,
             feedmainref: apparea,
         },
@@ -79,29 +107,43 @@ export default function FeedMain({
             feedmainid: `couponarea`,
             feedmainref: couponarea,
         },
-                {
+        {
             feedmainid: `filterarea`,
             feedmainref: filterarea,
         },
-                        {
+        {
             feedmainid: `sortarea`,
             feedmainref: sortarea,
         },
+        {
+            feedmainid: `notificationarea`,
+            feedmainref: notificationarea,
+        },
     ]
 
-    const [appstatic, setappstatic] = useApp(feedmain, feedmainstatic.feedmainid, feedmainstatic.feedmainindex, messagedl)
+    const [appstatic, setappstatic] = useApp(feedmain, feedmainstatic.feedmainid, feedmainstatic.feedmainindex, 
+        messagedl, notificationdl)
 
   return (
     <div>
         <main className="">
-                {appstatic?.map((data, index) => (<>
-            <section  key={index} className="">
+            {appstatic?.map((data, index) => (<>
+            
+            <section key={index} className="">
+            {data?.feedmainrender()?.length > 0 && (<>
+            <figcaption className="">
                 <CardMain>
-                <p className="">{data?.feedmaintitle}</p>
+                <p className="m-h5">{data?.feedmaintitle}</p>
                 </CardMain>
-                    {data?.feedmainrender()}
+            </figcaption>
+            
+            <figure key={index} className="">
+                {data?.feedmainrender()}
+            </figure>
+            </>)}
             </section>
-                </>))}
+
+            </>))}
         </main>
     </div>
   )

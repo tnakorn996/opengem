@@ -198,6 +198,22 @@ export default function FieldMain({
             }
         }
 
+    if(fieldmainstatic.fieldmainid === 'clickform') {
+        return {
+                fieldmainidtwo: 'click',
+                // fieldmaindetail: 'Successfully donate',
+                // fieldmainhref: `/chack/checkstatus/${href || fieldmainid}`,
+                // fieldmainaction: `/chack/checkindex/${href || fieldmainid}`,
+                fieldmaindata: {
+                    clickid: fieldmainid,
+
+                    userid:  user.id,
+                },
+                fieldmaindatatwo: {
+                    checkid: undefined,
+                }
+            }
+        }
     }
             // <DtaMain dtamaindata={{dtamainhref: `/claim/claimindex/${data?.couponid}`}} dtamainstatic={{dtamainid: `claimdframe`, dtamainindex: 1}} >
 
@@ -473,6 +489,16 @@ export default function FieldMain({
         },
     ]
 
+    const clickform = [
+        {
+            // fieldmaintitle: `dddd`, 
+            fieldmainaction: () => {
+                return fieldMainUpsert()
+            },
+            fieldmainentitle: `Mark all as read`, 
+        },
+    ]
+
 
     const fieldmain = [
         {
@@ -494,6 +520,10 @@ export default function FieldMain({
         {
             fieldmainid: `archiveform`,
             fieldmainindex: archiveform,
+        },
+                {
+            fieldmainid: `clickform`,
+            fieldmainindex: clickform,
         },
     ]
 

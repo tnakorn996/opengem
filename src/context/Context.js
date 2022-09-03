@@ -29,6 +29,7 @@ export const Provider = ({
     const [couponuserid, setcouponuserid] = useState()
     const [claimuserid, setclaimuserid] = useState()
     const [checkuserid, setcheckuserid] = useState()
+    const [clickuserid, setclickuserid] = useState()
 
     useEffect(() => {
         setauth(supabase.auth.session())
@@ -46,6 +47,7 @@ export const Provider = ({
             contextSelectCouponUserid(ref)
             contextSelectClaimUserid(ref)
             contextSelectCheckUserid(ref)
+            contextSelectClickUserid(ref)
             
         } 
     }, [auth, fieldmainstate, ptamainstate, rtamainstate])
@@ -70,8 +72,10 @@ export const Provider = ({
         if(data) {setcheckuserid(data)}
     }
 
-
-    
+    const contextSelectClickUserid = async (first) => {
+        const { data, error} = await supabase.from('click').select(`*`).filter("userid", "eq", first).limit(1).single().order('created_at', { ascending: false})
+        if(data) {setclickuserid(data)}
+    }
 
     const userdl = [
         {
@@ -123,9 +127,9 @@ export const Provider = ({
     //     return Object.assign({booltwo: false}, result)
     // }
 
-    function contextAction(first, second, navigate) {
-        if(first) {return  {navigate: navigate, bool: true}}  
-        return  {navigate: navigate, bool: false} 
+    function contextAction(first, second, navigate, data) {
+        if(first) {return  {navigate: navigate, bool: true, data: data}}  
+        return  {navigate: navigate, bool: false, data: data} 
     }
 
     const guidedl = [
@@ -143,6 +147,60 @@ export const Provider = ({
                         contextrender: () => {
                             const ref = couponuserid?.length === 0;
                             return contextAction(ref, data.contentid, data.contentaction)
+                        }
+                    }
+                ))
+            }
+        },
+        {
+            contextid: 'click',
+            contexttitle: 'First click',
+            contexticon: `✅`,
+            contextdata: () => {
+                if(typeof clickuserid === 'undefined') return null
+                return clickuserid.map(data => (
+                    {
+                        contextidtwo: data.contentid,
+                        contexthref: `/guide/guideindex/` + data.contentid,
+                        contextdetail: `${data.clicktitle}`,
+                        contextrender: () => {
+                            const ref = clickuserid?.length === 0;
+                            return contextAction(ref, data.contentid, data.contentaction)
+                        }
+                    }
+                ))
+            }
+        },
+    ]
+
+    // const date = new Date(
+    // new Date().getFullYear(),
+    // new Date().getMonth() - 1, 
+    // new Date().getDate()
+    // )
+    // const toisostring = date.toISOString();
+
+    const date = new Date()
+    const toisostring = date.toISOString();
+    // console.log('clickuserid?.created_at', clickuserid)
+
+    const notificationdl = [
+        {
+            contextid: 'all',
+            contexttitle: 'All claim check',
+            contexticon: `🔔`,
+            contextdata: () => {
+                if(typeof claimuserid === 'undefined'
+                || typeof checkuserid === 'undefined') return null
+                const concat = (claimuserid.concat(checkuserid)).sort((a, b) => b.created_at.localeCompare(a.created_at))
+                return concat.map(data => (
+                    {
+                        contextidtwo: data.claimid || data.checkid,
+                        contexthref: `/notification/notificationindex/${data.claimid || data.checkid}`,
+                        contextdetail: `${data.couponid.coupontitle} was marked as ${data.claimid ? `claimed` : `donated`}`,
+                        contextrender: () => {
+                            const ref = data?.created_at > (clickuserid && clickuserid.created_at)
+                            return contextAction(ref, data.claimid || data.checkid, data.couponid.couponid, data)
                         }
                     }
                 ))
@@ -166,6 +224,7 @@ export const Provider = ({
         checkdl,
         messagedl,
         guidedl,
+        notificationdl,
         
         }} >
         {children}
