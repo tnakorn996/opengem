@@ -34,10 +34,13 @@ export const Provider = ({
     useEffect(() => {
         setauth(supabase.auth.session())
         supabase.auth.onAuthStateChange((_event, session) => {
+            contextUpsert(session)
             setauth(session)
         })
 //         const { user, error } = supabase.auth.api.getUser('ACCESS_TOKEN_JWT')
 // console.log('user', user)
+
+        
     }, [])
 
     useEffect(() => {
@@ -51,6 +54,22 @@ export const Provider = ({
             
         } 
     }, [auth, fieldmainstate, ptamainstate, rtamainstate])
+
+
+    const contextUpsert = async (session) => {
+        const user = supabase.auth.user()
+        const query = {
+            userid: user.id,
+            useremail: user.email,
+            username: user.email.split(`@`)[0],
+        }
+        const { error } = await supabase.from('user').upsert(query, {returning: 'minimal'})
+            //   alert(error.message)
+            //   navigate(`/workout/workoutmain`)
+            // setfieldmainbool(!fieldmainbool)
+            // setfieldmainstate(!fieldmainstate)
+            // navigate(`/coupon/couponmain`)
+    }
 
     const contextSelectUserUserid = async (first) => {
         const { data, error} = await supabase.from('user').select(`*`).eq('userid', first)

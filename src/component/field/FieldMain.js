@@ -86,21 +86,22 @@ export default function FieldMain({
           password: refpasswordvalue,
     })
     //   alert(error.message)
-      if(data) {
-          alert('Successfully sign you in')
-          const user = supabase.auth.user()
-          const query = {
-              userid: user.id,
-              useremail: user.email,
-              username: user.email.split(`@`)[0],
-          }
-          const { error } = await supabase.from('user').upsert(query, {returning: 'minimal'})
-        //   alert(error.message)
-            //   navigate(`/workout/workoutmain`)
-            // setfieldmainbool(!fieldmainbool)
-            setfieldmainstate(!fieldmainstate)
-            navigate(`/coupon/couponmain`)
-      }
+    
+    //   if(data) {
+    //       alert('Successfully sign you in')
+    //       const user = supabase.auth.user()
+    //       const query = {
+    //           userid: user.id,
+    //           useremail: user.email,
+    //           username: user.email.split(`@`)[0],
+    //       }
+    //       const { error } = await supabase.from('user').upsert(query, {returning: 'minimal'})
+    //     //   alert(error.message)
+    //         //   navigate(`/workout/workoutmain`)
+    //         // setfieldmainbool(!fieldmainbool)
+    //         setfieldmainstate(!fieldmainstate)
+    //         navigate(`/coupon/couponmain`)
+    //   }
   }
 
   const fieldMainSignout = async () => {
