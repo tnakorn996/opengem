@@ -397,7 +397,7 @@ export function couponMainRenderTwo({data, datatwo, datathree, auth}) {
             </section>
             </SheetMain>
             </CardMain>
-            <section className="z-20 w-full fixed bottom-0 left-0 md:relative">
+            <section className="z-20 w-full fixed bottom-0 left-0">
             {auth ? (<>
                 <StaMain 
                     stamaindata={datatwo && datatwo} 

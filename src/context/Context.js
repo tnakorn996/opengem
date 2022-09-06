@@ -218,7 +218,7 @@ export const Provider = ({
                         contexthref: `/notification/notificationindex/${data.claimid || data.checkid}`,
                         contextdetail: `${data.couponid.coupontitle} was marked as ${data.claimid ? `claimed` : `donated`}`,
                         contextrender: () => {
-                            const ref = (data?.created_at > (clickuserid && clickuserid.created_at)) || (data?.created_at < toisostring)
+                            const ref = clickuserid ? (data?.created_at > clickuserid.created_at) : (data?.created_at < toisostring)
                             return contextAction(ref, data.claimid || data.checkid, data.couponid.couponid, data)
                         }
                     }

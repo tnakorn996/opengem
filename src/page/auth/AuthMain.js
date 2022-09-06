@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import TabMain from '../../component/tab/TabMain'
 import { Context } from '../../context/Context'
+import BadgeMain from '../../layout/badge/BadgeMain'
 import CardMain from '../../layout/card/CardMain'
 import ChipMain from '../../layout/chip/ChipMain'
 import ThemeMainTwo from '../../layout/theme/ThemeMainTwo'
@@ -53,11 +54,11 @@ export function authMainRender(auth, notificationdl) {
                   <RiNotificationLine />
                     New notifications
                     </figure>
-                    <ChipMain>
-                  <figure className="h-[50px] w-[50px] flex items-center justify-center  bg-red-700 text-white">
+                    <BadgeMain>
+                  <figure className="h-[50px] w-[50px] flex items-center justify-center">
                     {authMainAction(notificationdl)}
                   </figure>
-                    </ChipMain>
+                    </BadgeMain>
                   </div>
                 </CardMain>
               </article>

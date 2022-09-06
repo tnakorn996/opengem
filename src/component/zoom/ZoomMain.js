@@ -6,6 +6,7 @@ import { Context } from '../../context/Context'
 import useApp from '../../hook/useApp'
 import useSplit from '../../hook/useSplit'
 import CardMain from '../../layout/card/CardMain'
+import BadgeMain from '../../layout/badge/BadgeMain'
 import PostMain from '../post/PostMain'
 import DtaMain from '../dta/DtaMain'
 
@@ -196,7 +197,11 @@ export default function ZoomMain({
 
             <section className="px-[20px] grid grid-cols-2 gap-5">
                 <DtaMain dtamaindata={{dtamainhref: `/filter/filtermain`}} dtamainstatic={{dtamainid: `filterdframe`, dtamainindex: 0}} >
-                <button className="w-full flex items-center justify-center gap-1  l-button"><RiFilter3Line /> Filters {parsefilter?.length > 0 && parsefilter?.length}</button>
+                <button className="w-full flex items-center justify-center gap-1  l-button"><RiFilter3Line /> Filters 
+                <BadgeMain>
+                {parsefilter?.length > 0 && parsefilter?.length}
+                </BadgeMain>
+                </button>
                 </DtaMain>
                 <DtaMain dtamaindata={{dtamainhref: `/sort/sortmain`}} dtamainstatic={{dtamainid: `sortdframe`, dtamainindex: 0}} >
                 <button className="w-full flex items-center justify-center gap-1  l-button"> <RiArrowUpDownLine /> Sort</button>
