@@ -12,7 +12,7 @@ export default function UserForm() {
                     fieldmainid: `authform`,
                     fieldmainindex: 2,
                 }}
-                fieldmainstyle={{button: `!bg-red-700`}}
+                fieldmainstyle={{button: `!bg-red-700 !text-white`}}
                 />
             </section>
         </main>

@@ -450,8 +450,8 @@ export function claimMainRender({data}) {
                 <Link to={`/coupon/couponindex/${data?.couponid?.couponid}`}>
         <p className="m-h5  first-letter:uppercase">{data?.couponid?.coupontitle}</p>
                 </Link>
-        {/* <p className="l-h3">{data?.created_at?.slice(0, 10)}</p> */}
-        <p className="l-h4">{couponMainActionTwo(data?.created_at)}</p>
+        <p className="l-h4">{data?.created_at?.slice(0, 10)}</p>
+        {/* <p className="l-h4">{couponMainActionTwo(data?.created_at)}</p> */}
             </figcaption>
         </CardMain>
         </section>
@@ -568,7 +568,7 @@ export function notificationMainRender({data}) {
                 <Link to={`/coupon/couponindex/${data.contextrender().navigate}`}>
                 <article className="grid grid-flow-col justify-between items-start  m-h4 ">
             <p className="first-letter:uppercase">{data.contextdetail}</p>
-            <p className="">{couponMainActionTwo(data.contextrender().data.created_at)}</p>
+            <p className="">{couponMainActionTwo(data.contextrender().data.created_at)} ago</p>
                 </article>
                 </Link>
             </CardMain>

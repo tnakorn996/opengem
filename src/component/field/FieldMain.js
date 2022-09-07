@@ -9,7 +9,8 @@ import useApp from '../../hook/useApp'
 import useSplit from '../../hook/useSplit'
 import CardMain from '../../layout/card/CardMain'
 import ChoiceMain from '../choice/ChoiceMain'
-import { RiDeleteBin7Fill } from 'react-icons/ri'
+import { RiCheckboxBlankCircleFill, RiCheckboxBlankCircleLine, RiCheckboxCircleFill, RiDeleteBin7Fill, RiErrorWarningLine } from 'react-icons/ri'
+import SheetMain from '../../layout/sheet/SheetMain'
 
 export default function FieldMain({
     fieldmainstatic,
@@ -33,6 +34,7 @@ export default function FieldMain({
     const refpassword = useRef(null)
     const refcouponcost = useRef(null)
     const refcoupontitle = useRef(null)
+    const [fieldmainstatetwo, setfieldmainstatetwo] = useState(true)
 
 //   function fieldMainAction(first, second) {
 //     for(const data of first) {
@@ -68,12 +70,19 @@ export default function FieldMain({
   const fieldMainSignup = async () => {
     const refemailvalue = refemail?.current?.value
     const refpasswordvalue = refpassword?.current?.value
+    const concat = appMainActionThree(refemailvalue).concat(appMainActionFour(refpasswordvalue))
+    if(typeof concat !== 'undefined'){
+        for(const data of concat){
+            if(Object.keys(data).includes(`inform`)) return alert(`Please check the custom fields. Not all fields were correctly added`)
+        }
+    }
     const { error } = await supabase.auth.signUp({
         email: refemailvalue, 
         password: refpasswordvalue,
     })
     alert(`Successfully sent email to ${refemailvalue}`)
     setfieldmainstate(!fieldmainstate)
+
     // alert(error.message)
       // setfieldmainbool(!fieldmainbool)
   }
@@ -86,22 +95,6 @@ export default function FieldMain({
           password: refpasswordvalue,
     })
     //   alert(error.message)
-    
-    //   if(data) {
-    //       alert('Successfully sign you in')
-    //       const user = supabase.auth.user()
-    //       const query = {
-    //           userid: user.id,
-    //           useremail: user.email,
-    //           username: user.email.split(`@`)[0],
-    //       }
-    //       const { error } = await supabase.from('user').upsert(query, {returning: 'minimal'})
-    //     //   alert(error.message)
-    //         //   navigate(`/workout/workoutmain`)
-    //         // setfieldmainbool(!fieldmainbool)
-    //         setfieldmainstate(!fieldmainstate)
-    //         navigate(`/coupon/couponmain`)
-    //   }
   }
 
   const fieldMainSignout = async () => {
@@ -157,13 +150,14 @@ export default function FieldMain({
                 fieldmaindata: {
                     couponid: href || fieldmainid,
                     couponcost: refcouponcostvalue,
+                    coupontitle: refcoupontitlevalue,
 
                     userid: user.id,
-                    coupontitle: refcoupontitlevalue,
                 },
                 fieldmaindatatwo: {
                     couponid: href
-                }
+                },
+                fieldmaindatathree: appMainActionTwo(refcouponcostvalue).concat(appMainAction(refcoupontitlevalue))
             }
     }
     if(fieldmainstatic.fieldmainid === 'claimform') {
@@ -223,6 +217,11 @@ export default function FieldMain({
         if(typeof ref === 'undefined') return null
         // console.log('ref', ref)
         try {
+            if(typeof ref.fieldmaindatathree !== 'undefined' ){
+                for(const data of ref.fieldmaindatathree){
+                    if(Object.keys(data).includes(`inform`)) return alert(`Please check the custom fields. Not all fields were correctly added`)
+                }
+            }
             if(typeof Object.values(ref.fieldmaindatatwo)[0] === 'undefined'){
                 const { error } = await supabase.from(ref.fieldmainidtwo).upsert(ref.fieldmaindata, {returning: 'minimal'})
                 // alert(error.message)
@@ -233,10 +232,12 @@ export default function FieldMain({
             } 
             setfieldmainstate(!fieldmainstate)
             navigate(ref.fieldmainhref)
+
             // setfieldmainbool(!fieldmainbool)
             //   fieldMainActionTwo(ref)
         } catch (error) {
             setfieldmainstate(!fieldmainstate)
+
             // alert(error.message)
             // setfieldmainbool(!fieldmainbool)
             // fieldMainActionTwo(error)
@@ -376,11 +377,21 @@ export default function FieldMain({
             fieldmaindata: [
                 {
                     fieldmainsubtitle: `Email`,
-                    fieldmainrender: <input ref={refemail} type="email" className="l-input" placeholder="Your email address" />
+                    fieldmainrender: <input onChange={() => setfieldmainstatetwo(!fieldmainstatetwo)} ref={refemail} type="email" className="l-input" placeholder="Your email address" />,
+                    fieldmainrendertwo: () => {
+                        return appMainRender({
+                            data: appMainActionThree(refemail?.current?.value)
+                        })
+                    },
                 },
                 {
                     fieldmainsubtitle: `Password`,
-                    fieldmainrender: <input ref={refpassword} type="password" className="l-input" placeholder="Your password" />
+                    fieldmainrender: <input onChange={() => setfieldmainstatetwo(!fieldmainstatetwo)} ref={refpassword} type="password" className="l-input" placeholder="Your password" />,
+                    fieldmainrendertwo: () => {
+                        return appMainRender({
+                            data: appMainActionFour(refpassword?.current?.value)
+                        })
+                    },
                 },
             ]
         },
@@ -393,11 +404,17 @@ export default function FieldMain({
             fieldmaindata: [
                 {
                     fieldmainsubtitle: `Email`,
-                    fieldmainrender: <input ref={refemail} type="email" className="l-input" placeholder="Your email address" />
+                    fieldmainrender: <input ref={refemail} type="email" className="l-input" placeholder="Your email address" />,
+                    fieldmainrendertwo: () => {
+                        return null
+                    },
                 },
                 {
                     fieldmainsubtitle: `Password`,
-                    fieldmainrender: <input ref={refpassword} type="password" className="l-input" placeholder="Your password" />
+                    fieldmainrender: <input ref={refpassword} type="password" className="l-input" placeholder="Your password" />,
+                    fieldmainrendertwo: () => {
+                        return null
+                    },
                 },
             ]
         },
@@ -421,12 +438,22 @@ export default function FieldMain({
             fieldmaindata: [
                 {
                     fieldmainsubtitle: `Donation cost`,
-                    fieldmainrender: <input onClick={() => {fieldMainSelect(`couponcost`, refcouponcost)}} ref={refcouponcost} className="l-input" placeholder="eg. 90" />
+                    fieldmainrender: <input onChange={() => {setfieldmainstatetwo(!fieldmainstatetwo)}} onClick={() => {fieldMainSelect(`couponcost`, refcouponcost)}} ref={refcouponcost} className="l-input" placeholder="eg. 90" />,
+                    fieldmainrendertwo: () => {
+                        return appMainRender({
+                            data: appMainActionTwo(refcouponcost?.current?.value)
+                        })
+                    },
                 },
 
                 {
                     fieldmainsubtitle: `Company name`,
-                    fieldmainrender: <input onClick={() => {fieldMainSelect(`coupontitle`, refcoupontitle)}} ref={refcoupontitle} className="l-input" placeholder="eg. 2Degrees" />
+                    fieldmainrender: <input onChange={() => {setfieldmainstatetwo(!fieldmainstatetwo)}} onClick={() => {fieldMainSelect(`coupontitle`, refcoupontitle)}} ref={refcoupontitle} className="l-input" placeholder="eg. 2Degrees" />,
+                    fieldmainrendertwo: () => {
+                        return appMainRender({
+                            data: appMainAction(refcoupontitle?.current?.value)
+                        })
+                    },
                 },
             ]
         },
@@ -528,7 +555,8 @@ export default function FieldMain({
         },
     ]
 
-    const [appstatic, setappstatic] = useApp(fieldmain, fieldmainstatic.fieldmainid, fieldmainstatic.fieldmainindex, splitstaticthree)
+    const [appstatic, setappstatic] = useApp(fieldmain, fieldmainstatic.fieldmainid, fieldmainstatic.fieldmainindex, splitstaticthree
+        ,fieldmainstatetwo)
 
   return (
     <div>
@@ -544,16 +572,17 @@ export default function FieldMain({
 
                     {data.fieldmaindata?.map((dat, inde) => (<>
                     <CardMain key={inde}>
-                    <p className="l-h3">{dat?.fieldmainsubtitle}</p>
+                    <p className="l-h5">{dat?.fieldmainsubtitle}</p>
                     <br />
                     {dat?.fieldmainrender}
+                    {dat?.fieldmainrendertwo() && dat?.fieldmainrendertwo()}
                     </CardMain>
                     </>))}
 
                     <CardMain>
                         <button onClick={() => {
                             data?.fieldmainaction()
-                        }} className={`w-full  l-button ${fieldmainstyle?.button}`}>{data?.fieldmainentitle}</button>
+                        }} className={`w-full  m-button ${fieldmainstyle?.button}`}>{data?.fieldmainentitle}</button>
                     </CardMain>
 
             </motion.section>
@@ -562,3 +591,155 @@ export default function FieldMain({
     </div>
   )
 }
+
+export function appMainRender({data}) {
+    if(!Array.isArray(data)) return null
+  return (
+    <div>
+        <section className="">
+            <br />
+            <SheetMain>
+            {data?.map((data, index) => (<>
+            <motion.article key={index} initial={{opacity: 0}} animate={{opacity: 1}} className={`flex flex-row items-center  duration-100 l-h4 ${color(data)}`}>
+                <CardMain>
+                <p>{data?.inform && <RiCheckboxBlankCircleLine />}</p>
+                <p>{data?.success && <RiCheckboxCircleFill />}</p>
+                </CardMain>
+                <p>{data?.inform && data?.inform}</p>
+                <p>{data?.success && data?.success}</p>
+            </motion.article>
+            </>))}
+            </SheetMain>
+        </section>
+    </div>
+  )
+}
+
+export function color(first) {
+    if(Object.keys(first).includes('inform')) {return `text-slate-300`}
+    if(Object.keys(first).includes('success')) {return `text-emerald-300`}
+
+}
+
+
+    export function appMainAction(first) {
+        if(typeof first === 'undefined' || first === '') return null
+        const array = [
+            {
+                inform: `Requires this field`,
+                condition: () => {
+                    if(first !== '') return true
+                    return false
+                }
+            },
+            {
+                inform: `Must be between 5 - 20 characters`,
+                condition: () => {
+                    if(first.length >= 5 && first.length <= 20) return true
+                    return false
+                }
+            }
+        ]
+
+        array.forEach(data => {
+            if(data.condition() === true) {
+                delete Object.assign(data, {[`success`]: data[`inform`] })[`inform`];
+            } 
+        })
+        return array
+    }
+
+    export function appMainActionTwo(first) {
+        if(typeof first === 'undefined' || first === '') return null
+        const array = [
+            {
+                inform: `Requires a number type`,
+                condition: () => {
+                    if(/^\d*$/.test(first)) return true
+                    return false
+                }
+            },
+            {
+                inform: `Must be between 1 - 10 characters`,
+                condition: () => {
+                    if(first.length <= 10) return true
+                    return false
+                }
+            }
+        ]
+
+        array.forEach(data => {
+            if(data.condition() === true) {
+                delete Object.assign(data, {[`success`]: data[`inform`] })[`inform`];
+            } 
+        })
+        return array
+    }
+
+    export function appMainActionThree(first) {
+        if(typeof first === 'undefined' || first === '') return null
+        const array = [
+            {
+                inform: `Email is available`,
+                condition: () => {
+                    if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(first)) return true
+                    return false
+                }
+            },
+            {
+                inform: `Must be between 5 - 20 characters`,
+                condition: () => {
+                    if(first.length >= 5 && first.length <= 20) return true
+                    return false
+                }
+            },
+        ]
+
+        array.forEach(data => {
+            if(data.condition() === true) {
+                delete Object.assign(data, {[`success`]: data[`inform`] })[`inform`];
+            } 
+        })
+        return array
+    }
+
+    export function appMainActionFour(first) {
+        if(typeof first === 'undefined' || first === '') return null
+        const array = [
+            {
+                inform: `Capital letter`,
+                condition: () => {
+                    if(new RegExp("[A-Z]").test(first)) return true
+                    return false
+                }
+            },
+            {
+                inform: `Lowercase letter`,
+                condition: () => {
+                    if(new RegExp("[a-z]").test(first)) return true
+                    return false
+                }
+            },
+             {
+                inform: `Number`,
+                condition: () => {
+                    if(new RegExp("[0-9]").test(first)) return true
+                    return false
+                }
+            },
+              {
+                inform: `Special charector`,
+                condition: () => {
+                    if(new RegExp("[$@$!%*#?&]").test(first)) return true
+                    return false
+                }
+            },
+        ]
+
+        array.forEach(data => {
+            if(data.condition() === true) {
+                delete Object.assign(data, {[`success`]: data[`inform`] })[`inform`];
+            } 
+        })
+        return array
+    }
