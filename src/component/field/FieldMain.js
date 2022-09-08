@@ -73,7 +73,7 @@ export default function FieldMain({
     const concat = appMainActionThree(refemailvalue).concat(appMainActionFour(refpasswordvalue))
     if(typeof concat !== 'undefined'){
         for(const data of concat){
-            if(Object.keys(data).includes(`inform`)) return alert(`Please check the custom fields. Not all fields were correctly added`)
+            if(Object.keys(data).includes(`inform`)) return alert(`Not all fields were correctly added. Please re-check the custom fields.`)
         }
     }
     const { error } = await supabase.auth.signUp({
@@ -219,7 +219,7 @@ export default function FieldMain({
         try {
             if(typeof ref.fieldmaindatathree !== 'undefined' ){
                 for(const data of ref.fieldmaindatathree){
-                    if(Object.keys(data).includes(`inform`)) return alert(`Please check the custom fields. Not all fields were correctly added`)
+                    if(Object.keys(data).includes(`inform`)) return alert(`Not all fields were correctly added. Please re-check the custom fields.`)
                 }
             }
             if(typeof Object.values(ref.fieldmaindatatwo)[0] === 'undefined'){
@@ -377,7 +377,9 @@ export default function FieldMain({
             fieldmaindata: [
                 {
                     fieldmainsubtitle: `Email`,
-                    fieldmainrender: <input onChange={() => setfieldmainstatetwo(!fieldmainstatetwo)} ref={refemail} type="email" className="l-input" placeholder="Your email address" />,
+                    fieldmainrender: () => {
+                        return <input onChange={() => setfieldmainstatetwo(!fieldmainstatetwo)} ref={refemail} type="email" className="l-input" placeholder="Your email address" />
+                    },
                     fieldmainrendertwo: () => {
                         return appMainRender({
                             data: appMainActionThree(refemail?.current?.value)
@@ -386,7 +388,9 @@ export default function FieldMain({
                 },
                 {
                     fieldmainsubtitle: `Password`,
-                    fieldmainrender: <input onChange={() => setfieldmainstatetwo(!fieldmainstatetwo)} ref={refpassword} type="password" className="l-input" placeholder="Your password" />,
+                    fieldmainrender: () => {
+                        return <input onChange={() => setfieldmainstatetwo(!fieldmainstatetwo)} ref={refpassword} type="password" className="l-input" placeholder="Your password" />
+                    },
                     fieldmainrendertwo: () => {
                         return appMainRender({
                             data: appMainActionFour(refpassword?.current?.value)
@@ -404,14 +408,18 @@ export default function FieldMain({
             fieldmaindata: [
                 {
                     fieldmainsubtitle: `Email`,
-                    fieldmainrender: <input ref={refemail} type="email" className="l-input" placeholder="Your email address" />,
+                    fieldmainrender: () => {
+                        return <input ref={refemail} type="email" className="l-input" placeholder="Your email address" />
+                    },
                     fieldmainrendertwo: () => {
                         return null
                     },
                 },
                 {
                     fieldmainsubtitle: `Password`,
-                    fieldmainrender: <input ref={refpassword} type="password" className="l-input" placeholder="Your password" />,
+                    fieldmainrender: () => {
+                        return <input ref={refpassword} type="password" className="l-input" placeholder="Your password" />
+                    },
                     fieldmainrendertwo: () => {
                         return null
                     },
@@ -438,7 +446,9 @@ export default function FieldMain({
             fieldmaindata: [
                 {
                     fieldmainsubtitle: `Donation cost`,
-                    fieldmainrender: <input onChange={() => {setfieldmainstatetwo(!fieldmainstatetwo)}} onClick={() => {fieldMainSelect(`couponcost`, refcouponcost)}} ref={refcouponcost} className="l-input" placeholder="eg. 90" />,
+                    fieldmainrender: () => {
+                        return <input onChange={() => {setfieldmainstatetwo(!fieldmainstatetwo)}} onClick={() => {fieldMainSelect(`couponcost`, refcouponcost)}} ref={refcouponcost} className="l-input" placeholder="eg. 90" />
+                    },
                     fieldmainrendertwo: () => {
                         return appMainRender({
                             data: appMainActionTwo(refcouponcost?.current?.value)
@@ -448,7 +458,9 @@ export default function FieldMain({
 
                 {
                     fieldmainsubtitle: `Company name`,
-                    fieldmainrender: <input onChange={() => {setfieldmainstatetwo(!fieldmainstatetwo)}} onClick={() => {fieldMainSelect(`coupontitle`, refcoupontitle)}} ref={refcoupontitle} className="l-input" placeholder="eg. 2Degrees" />,
+                    fieldmainrender: () => {
+                        return <input onChange={() => {setfieldmainstatetwo(!fieldmainstatetwo)}} onClick={() => {fieldMainSelect(`coupontitle`, refcoupontitle)}} ref={refcoupontitle} className="l-input" placeholder="eg. 2Degrees" />
+                    },
                     fieldmainrendertwo: () => {
                         return appMainRender({
                             data: appMainAction(refcoupontitle?.current?.value)
@@ -574,8 +586,8 @@ export default function FieldMain({
                     <CardMain key={inde}>
                     <p className="l-h5">{dat?.fieldmainsubtitle}</p>
                     <br />
-                    {dat?.fieldmainrender}
-                    {dat?.fieldmainrendertwo() && dat?.fieldmainrendertwo()}
+                    {dat?.fieldmainrender()}
+                    {dat?.fieldmainrendertwo?.()}
                     </CardMain>
                     </>))}
 
@@ -599,8 +611,9 @@ export function appMainRender({data}) {
         <section className="">
             <br />
             <SheetMain>
+                {/* <div className="grid grid-cols-2"> */}
             {data?.map((data, index) => (<>
-            <motion.article key={index} initial={{opacity: 0}} animate={{opacity: 1}} className={`flex flex-row items-center  duration-100 l-h4 ${color(data)}`}>
+            <motion.article key={index} initial={{opacity: 0}} animate={{opacity: 1}} className={`flex flex-row items-center  duration-100 l-h5 ${color(data)}`}>
                 <CardMain>
                 <p>{data?.inform && <RiCheckboxBlankCircleLine />}</p>
                 <p>{data?.success && <RiCheckboxCircleFill />}</p>
@@ -609,6 +622,7 @@ export function appMainRender({data}) {
                 <p>{data?.success && data?.success}</p>
             </motion.article>
             </>))}
+                {/* </div> */}
             </SheetMain>
         </section>
     </div>

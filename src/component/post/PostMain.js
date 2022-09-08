@@ -566,7 +566,7 @@ export function notificationMainRender({data}) {
             <SheetMain>
             <CardMain>
                 <Link to={`/coupon/couponindex/${data.contextrender().navigate}`}>
-                <article className="grid grid-flow-col justify-between items-start  m-h4 ">
+                <article className="grid grid-flow-col justify-between items-start gap-5  l-h4 ">
             <p className="first-letter:uppercase">{data.contextdetail}</p>
             <p className="">{couponMainActionTwo(data.contextrender().data.created_at)} ago</p>
                 </article>
