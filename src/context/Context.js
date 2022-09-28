@@ -156,7 +156,7 @@ export const Provider = ({
             contextid: 'coupon',
             contexttitle: 'First coupon',
             contexticon: `📝`,
-            contextdata: () => {
+            contextdata () {
                 if(typeof couponuserid === 'undefined') return null
                 return couponul.map(data => (
                     {
@@ -175,7 +175,7 @@ export const Provider = ({
             contextid: 'click',
             contexttitle: 'First click',
             contexticon: `✅`,
-            contextdata: () => {
+            contextdata () {
                 if(typeof clickuserid === 'undefined') return null
                 return clickuserid.map(data => (
                     {
@@ -208,7 +208,7 @@ export const Provider = ({
             contextid: 'all',
             contexttitle: 'All claim check',
             contexticon: `🔔`,
-            contextdata: () => {
+            contextdata () {
                 if(typeof claimuserid === 'undefined'
                 || typeof checkuserid === 'undefined') return null
                 const concat = (claimuserid.concat(checkuserid)).sort((a, b) => b.created_at.localeCompare(a.created_at))

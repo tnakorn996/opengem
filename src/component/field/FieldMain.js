@@ -701,9 +701,9 @@ export function color(first) {
                 }
             },
             {
-                inform: `Must be between 5 - 20 characters`,
+                inform: `Must be between 5 - 30 characters`,
                 condition: () => {
-                    if(first.length >= 5 && first.length <= 20) return true
+                    if(first.length >= 5 && first.length <= 30) return true
                     return false
                 }
             },
